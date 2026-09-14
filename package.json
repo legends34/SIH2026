@@ -1,0 +1,17 @@
+{
+  "name": "lane-e-content",
+  "version": "0.1.0",
+  "description": "Lane E: Content, i18n & Accessibility for Beed Health App",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "check": "tsc --noEmit && pnpm test",
+    "test": "vitest run",
+    "content:report": "tsx src/lib/content/report.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^26.5.1",
+    "tsx": "^4.7.0",
+    "typescript": "^5.4.0",
+    "vitest": "^1.4.0"
+  }
+}

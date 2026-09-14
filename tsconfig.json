@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ES2021", "DOM"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+    "types": ["node", "vitest/globals"],
+    "paths": {
+      "@/types": ["./src/types/index.ts"],
+      "@/content/*": ["./src/lib/content/*"]
+    },
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "baseUrl": ".",
+    "skipLibCheck": true
+  },
+  "include": ["src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}
