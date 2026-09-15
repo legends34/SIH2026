@@ -1,0 +1,24 @@
+id,name,district,taluka,tier,pincode,latitude,longitude,departments,verified
+fac_0001,District Hospital Gurugram,Gurugram,Gurugram,dh,122001,28.4595,77.0266,general_opd|maternal_child_health|paediatrics|obstetrics|general_surgery|dental|emergency,true
+fac_0002,Civil Hospital Sohna,Gurugram,Sohna,sdh,122103,28.2435,77.0679,general_opd|maternal_child_health|paediatrics|obstetrics|general_surgery|dental|emergency,true
+fac_0003,"Primary Health Centre, Pataudi",Gurugram,Pataudi,phc,122503,28.321,76.818,general_opd|maternal_child_health,false
+fac_0004,"Community Health Centre, Farrukhnagar",Gurugram,Farrukhnagar,chc,122506,28.456,76.8432,general_opd|maternal_child_health|paediatrics|obstetrics|general_surgery|dental,false
+fac_0005,"Primary Health Centre, Wazirabad",Gurugram,Gurugram,phc,122001,28.4931,77.0145,general_opd|maternal_child_health,false
+fac_0006,B.K. Hospital Faridabad,Faridabad,Faridabad,dh,121001,28.4089,77.3178,general_opd|maternal_child_health|paediatrics|obstetrics|general_surgery|dental|emergency,true
+fac_0007,"Community Health Centre, Ballabhgarh",Faridabad,Ballabhgarh,chc,121004,28.3417,77.3201,general_opd|maternal_child_health|paediatrics|obstetrics|general_surgery|dental,true
+fac_0008,"Primary Health Centre, Tigaon",Faridabad,Tigaon,phc,121101,28.378,77.41,general_opd|maternal_child_health,false
+fac_0009,District Combined Hospital Ghaziabad,Ghaziabad,Ghaziabad,dh,201001,28.6692,77.4538,general_opd|maternal_child_health|paediatrics|obstetrics|general_surgery|dental|emergency,true
+fac_0010,"Community Health Centre, Modinagar",Ghaziabad,Modinagar,chc,201204,28.8362,77.5779,general_opd|maternal_child_health|paediatrics|obstetrics|general_surgery|dental,true
+fac_0011,"Primary Health Centre, Loni",Ghaziabad,Loni,phc,201102,28.7468,77.2891,general_opd|maternal_child_health,false
+fac_0012,"Primary Health Centre, Muradnagar",Ghaziabad,Muradnagar,phc,201206,28.7775,77.5041,general_opd|maternal_child_health,false
+fac_0013,District Hospital Gautam Buddha Nagar,Gautam Buddha Nagar,Noida,dh,201301,28.5355,77.391,general_opd|maternal_child_health|paediatrics|obstetrics|general_surgery|dental|emergency,true
+fac_0014,"Community Health Centre, Dadri",Gautam Buddha Nagar,Dadri,chc,203207,28.5543,77.5588,general_opd|maternal_child_health|paediatrics|obstetrics|general_surgery|dental,true
+fac_0015,"Primary Health Centre, Jewar",Gautam Buddha Nagar,Jewar,phc,203135,28.1249,77.5465,general_opd|maternal_child_health,false
+fac_0016,L.L.R.M. Medical College Hospital Meerut,Meerut,Meerut,dh,250004,28.9845,77.7064,general_opd|maternal_child_health|paediatrics|obstetrics|general_surgery|dental|emergency,true
+fac_0017,"Community Health Centre, Hapur",Meerut,Hapur,chc,245101,28.7303,77.7796,general_opd|maternal_child_health|paediatrics|obstetrics|general_surgery|dental,true
+fac_0018,"Primary Health Centre, Sardhana",Meerut,Sardhana,phc,250342,29.1442,77.6165,general_opd|maternal_child_health,false
+fac_0019,"Primary Health Centre, Kharkhoda",Meerut,Kharkhoda,phc,250404,28.8714,77.0349,general_opd|maternal_child_health,false
+fac_0020,General Hospital Sonipat,Sonipat,Sonipat,dh,131001,28.9931,77.0151,general_opd|maternal_child_health|paediatrics|obstetrics|general_surgery|dental|emergency,true
+fac_0021,"Community Health Centre, Gohana",Sonipat,Gohana,chc,131301,29.1407,76.7008,general_opd|maternal_child_health|paediatrics|obstetrics|general_surgery|dental,true
+fac_0022,"Primary Health Centre, Kharkhoda",Sonipat,Kharkhoda,phc,131403,28.865,77.0472,general_opd|maternal_child_health,false
+fac_0023,"Health & Wellness Sub-Centre, Kundli",Sonipat,Sonipat,sub_centre,131028,28.873,77.042,general_opd|maternal_child_health,false
