@@ -107,9 +107,9 @@ describe('LOCALES and NAMESPACES completeness', () => {
   });
 
   it('NAMESPACES covers all expected namespaces', () => {
-    const expected = ['common','auth','patientHome','triage','emergency',
-      'facilities','booking','queue','doctor','records','medicines',
-      'pharmacist','complaints','profile','admin','states'];
+    const expected = ['common', 'auth', 'patientHome', 'triage', 'emergency',
+      'facilities', 'booking', 'queue', 'doctor', 'records', 'medicines',
+      'pharmacist', 'complaints', 'profile', 'admin', 'states'];
     for (const ns of expected) {
       expect(NAMESPACES).toContain(ns);
     }
