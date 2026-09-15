@@ -1,0 +1,30 @@
+# Replace every @handle with a real GitHub username.
+# Later patterns override earlier ones.
+
+*                          @lane-a-owner
+
+/src/types/                @lane-b-owner
+/src/lib/mock-data/        @lane-b-owner
+/data/reference/           @lane-b-owner
+/docs/data-inventory.md    @lane-b-owner
+
+/src/lib/triage/           @lane-c-owner
+/docs/triage/              @lane-c-owner
+
+/docs/api/                 @lane-d-owner
+/docs/erd.md               @lane-d-owner
+
+/src/lib/content/          @lane-e-owner
+/docs/copy-rules.md        @lane-e-owner
+/docs/content/             @lane-e-owner
+
+/docs/demo-script.md       @lane-f-owner
+/docs/qa/                  @lane-f-owner
+/docs/deck/                @lane-f-owner
+/e2e/                      @lane-f-owner
+/playwright.config.ts      @lane-f-owner
+
+/AGENTS.md                 @project-lead
+/CLAUDE.md                 @project-lead
+/docs/decisions.md         @project-lead
+/.github/                  @project-lead
