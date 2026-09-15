@@ -1,5 +1,7 @@
 export const facilities = {
   title: 'Hospitals and clinics',
+  subtitle: 'Find nearby Primary Health Centres, Community Health Centres, and Hospitals',
+  viewDetail: 'View Facility Details',
   search: {
     placeholder: 'Search by name or location',
     label: 'Search facilities',

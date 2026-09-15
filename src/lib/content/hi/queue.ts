@@ -4,6 +4,10 @@ type DeepStringify<T> = { [K in keyof T]: T[K] extends Record<string, unknown> ?
 
 export const queue: Shape = {
   title: 'मेरा टोकन',
+  nowServing: 'वर्तमान टोकन',
+  yourToken: 'आपका टोकन',
+  etaLabel: 'अनुमानित प्रतीक्षा समय',
+  liveTracking: 'लाइव कतार स्थिति',
   tokenNumber: 'टोकन {number}',
   currentToken: 'अभी जा रहे हैं: {number}',
   estimatedWait: 'लगभग {minutes} मिनट इंतज़ार',

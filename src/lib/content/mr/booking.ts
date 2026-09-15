@@ -9,6 +9,7 @@ export const booking: Shape = {
   selectDate: 'तारीख निवडा',
   selectSlot: 'वेळ निवडा',
   noSlots: 'या तारखेला कोणतीही वेळ उपलब्ध नाही. दुसऱ्या दिवशी प्रयत्न करा.',
+  bookSlot: 'ओपीडी स्लॉट बुक करा',
   confirm: {
     title: 'अपॉइंटमेंट निश्चित करा',
     facility: 'हॉस्पिटल / दवाखाना',
@@ -17,6 +18,10 @@ export const booking: Shape = {
     time: 'वेळ',
     department: 'विभाग',
     button: 'बुकिंग निश्चित करा',
+  },
+  receipt: {
+    title: 'अधिकृत ओपीडी टोकन पावती',
+    tokenLabel: 'तुमचा ओपीडी टोकन क्रमांक',
   },
   success: {
     title: 'अपॉइंटमेंट बुक झाली!',

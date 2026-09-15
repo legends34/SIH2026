@@ -3,6 +3,11 @@ type Shape = DeepStringify<typeof en.patientHome>;
 type DeepStringify<T> = { [K in keyof T]: T[K] extends Record<string, unknown> ? DeepStringify<T[K]> : string };
 
 export const patientHome: Shape = {
+  title: 'मुख्य पृष्ठ',
+  householdAccount: 'साझा पारिवारिक खाता',
+  todayAppointment: 'आज का अपॉइंटमेंट',
+  viewReceipt: 'टोकन रसीद देखें',
+  services: 'स्वास्थ्य सेवाएं',
   greeting: 'नमस्ते, {name}।',
   greetingGeneric: 'नमस्ते।',
   checkSymptoms: 'लक्षण जाँचें',

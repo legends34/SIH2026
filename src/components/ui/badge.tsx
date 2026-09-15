@@ -3,13 +3,19 @@ import type { UrgencyBand, FacilityTier, StockStatus, ComplaintStatus } from '@/
 
 export function UrgencyBadge({ urgency, label }: { urgency: UrgencyBand; label?: string }) {
   const badgeClass = `urgency-badge badge-${urgency}`;
+  const defaultLabels: Record<UrgencyBand, string> = {
+    routine: 'Routine Care (नियमित देखभाल)',
+    'self-care': 'Self-Care at Home (घरेलू देखभाल)',
+    urgent: 'Urgent Care (त्वरित देखभाल)',
+    emergency: 'Emergency — Immediate Care (आपातकालीन)',
+  };
   return (
     <span
       className={badgeClass}
       data-testid="triage-urgency"
       data-urgency={urgency}
     >
-      {label || urgency.toUpperCase()}
+      {label || defaultLabels[urgency] || urgency}
     </span>
   );
 }

@@ -1,5 +1,10 @@
 export const complaints = {
   title: 'Feedback and complaints',
+  generate: 'Generate Formal Grievance Preview',
+  submit: 'Submit Official Grievance',
+  preview: {
+    title: 'Review & Edit Grievance Details',
+  },
   form: {
     title: 'What happened?',
     typeLabel: 'Type',

@@ -25,4 +25,14 @@ export const common = {
     selectLabel: 'Choose language',
     changed: 'Language changed to {name}.',
   },
+  actions: {
+    back: 'Back',
+    close: 'Close',
+  },
+  roles: {
+    citizen: 'Citizen',
+    doctor: 'Doctor',
+    pharmacist: 'Pharmacist',
+    admin: 'District Admin',
+  },
 } as const;

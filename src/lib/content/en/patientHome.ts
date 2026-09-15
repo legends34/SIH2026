@@ -1,4 +1,9 @@
 export const patientHome = {
+  title: 'Home',
+  householdAccount: 'Shared Household Account',
+  todayAppointment: "Today's Appointment",
+  viewReceipt: 'View Token Receipt',
+  services: 'Healthcare Services',
   greeting: 'Hello, {name}.',
   greetingGeneric: 'Hello.',
   checkSymptoms: 'Check symptoms',

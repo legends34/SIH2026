@@ -155,7 +155,7 @@ export default function BookingWizardPage() {
             data-testid="booking-confirm"
             style={{ fontSize: '1.1rem', padding: '1rem' }}
           >
-            {t('booking.confirm') || 'Confirm Appointment & Generate Token'} ➔
+            {t('booking.confirm.button') || 'Confirm Appointment & Generate Token'} ➔
           </button>
         </form>
       </div>

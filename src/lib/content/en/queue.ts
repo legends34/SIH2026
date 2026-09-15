@@ -1,5 +1,9 @@
 export const queue = {
   title: 'My token',
+  nowServing: 'Now Serving',
+  yourToken: 'Your Token',
+  etaLabel: 'Estimated Wait Time',
+  liveTracking: 'Live Queue Status',
   tokenNumber: 'Token {number}',
   currentToken: 'Now serving: {number}',
   estimatedWait: 'About {minutes} minutes wait',

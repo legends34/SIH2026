@@ -108,8 +108,8 @@ export default function ComplaintTrackerPage() {
                   style={{ padding: '0.9rem 1.1rem', borderLeft: '4px solid var(--primary-700)', marginBottom: 0 }}
                 >
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-                    <strong style={{ fontSize: '0.95rem', color: 'var(--slate-900)', textTransform: 'capitalize' }}>
-                      Status: {entry.status.replace('_', ' ')}
+                    <strong style={{ fontSize: '0.95rem', color: 'var(--slate-900)' }}>
+                      {entry.status === 'in_review' ? 'Under Official Review' : entry.status === 'escalated' ? 'Escalated to Officer' : entry.status === 'resolved' ? 'Grievance Resolved' : entry.status === 'closed' ? 'Grievance Closed' : 'Grievance Open'}
                     </strong>
                     <span style={{ fontSize: '0.75rem', color: 'var(--slate-500)' }}>
                       {new Date(entry.updatedAt).toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}

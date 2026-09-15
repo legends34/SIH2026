@@ -105,7 +105,7 @@ export default function MedicalRecordsTimelinePage() {
                   </div>
 
                   <span style={{ fontSize: '0.75rem', fontWeight: 700, padding: '0.2rem 0.5rem', background: 'var(--slate-100)', borderRadius: 'var(--radius-sm)', textTransform: 'uppercase' }}>
-                    {rec.type.replace('_', ' ')}
+                    {rec.type === 'consultation' ? 'Consultation' : rec.type === 'prescription' ? 'Prescription' : rec.type === 'lab_report' ? 'Lab Report' : 'Vaccination'}
                   </span>
                 </div>
 

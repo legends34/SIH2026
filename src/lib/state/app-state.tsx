@@ -259,8 +259,13 @@ export function AppStateProvider({ children }: { children: React.ReactNode }) {
     householdPatients.find((p) => p.id === activePatientId) ??
     householdPatients[0]!;
 
-  const translate = (key: string, vars?: Record<string, string | number>) =>
-    t(locale, key, vars);
+  const translate = (key: string, vars?: Record<string, string | number>, fallback?: string) => {
+    const res = t(locale, key, vars);
+    if (res === key) {
+      return fallback ?? '';
+    }
+    return res;
+  };
 
   return (
     <AppStateContext.Provider

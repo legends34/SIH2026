@@ -3,6 +3,8 @@ type EmergencyShape = DeepStringify<typeof en.emergency>;
 type DeepStringify<T> = { [K in keyof T]: T[K] extends Record<string, unknown> ? DeepStringify<T[K]> : string };
 
 export const emergency: EmergencyShape = {
+  call108: '108 पर कॉल करें — एम्बुलेंस',
+  nearestFacility: 'निकटतम आपातकालीन सुविधा: {facilityName} ({distance} किमी)',
   overlay: {
     headline: 'अभी मदद के लिए कॉल करें।',
     call108: '108 पर कॉल करें — एम्बुलेंस',

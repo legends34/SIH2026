@@ -5,6 +5,7 @@ export const booking = {
   selectDate: 'Choose date',
   selectSlot: 'Choose time',
   noSlots: 'No slots available on this date. Try another day.',
+  bookSlot: 'Book OPD Slot',
   confirm: {
     title: 'Confirm appointment',
     facility: 'Hospital / Clinic',
@@ -13,6 +14,10 @@ export const booking = {
     time: 'Time',
     department: 'Department',
     button: 'Confirm booking',
+  },
+  receipt: {
+    title: 'Official OPD Token Receipt',
+    tokenLabel: 'Your OPD Token Number',
   },
   success: {
     title: 'Appointment booked!',

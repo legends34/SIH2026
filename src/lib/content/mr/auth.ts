@@ -3,8 +3,13 @@ type Shape = DeepStringify<typeof en.auth>;
 type DeepStringify<T> = { [K in keyof T]: T[K] extends Record<string, unknown> ? DeepStringify<T[K]> : string };
 
 export const auth: Shape = {
+  language: {
+    title: 'तुमची भाषा निवडा',
+    subtitle: 'शासकीय आरोग्य सेवांसाठी तुमची पसंतीची भाषा निवडा',
+  },
   login: {
     title: 'लॉग इन करा',
+    subtitle: 'कुटुंबाच्या आरोग्य सेवांसाठी तुमचा मोबाईल नंबर प्रविष्ट करा',
     phoneLabel: 'मोबाइल नंबर',
     phonePlaceholder: 'तुमचा 10 अंकी नंबर टाका',
     sendOtp: 'OTP पाठवा',
@@ -19,6 +24,12 @@ export const auth: Shape = {
       invalidOtp: 'कोड जुळला नाही. पुन्हा प्रयत्न करा.',
       tooManyAttempts: 'खूप वेळा चुकला. 10 मिनिटांनी पुन्हा प्रयत्न करा.',
     },
+  },
+  otp: {
+    title: 'ओटीपी पडताळणी करा',
+    subtitle: 'तुमच्या मोबाईलवर पाठवलेला ६ अंकी कोड प्रविष्ट करा',
+    otpLabel: '६ अंकी ओटीपी',
+    verify: 'पडताळणी करा आणि पुढे जा',
   },
   register: {
     title: 'अकाउंट तयार करा',

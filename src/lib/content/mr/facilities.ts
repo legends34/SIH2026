@@ -4,6 +4,8 @@ type DeepStringify<T> = { [K in keyof T]: T[K] extends Record<string, unknown> ?
 
 export const facilities: Shape = {
   title: 'हॉस्पिटल आणि दवाखाने',
+  subtitle: 'तुमच्या जवळील प्राथमिक आरोग्य केंद्र, समुदाय आरोग्य केंद्र आणि रुग्णालये शोधा',
+  viewDetail: 'सुविधेचा तपशील पाहा',
   search: {
     placeholder: 'नाव किंवा ठिकाणावरून शोधा',
     label: 'सुविधा शोधा',

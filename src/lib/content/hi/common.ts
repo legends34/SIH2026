@@ -29,4 +29,14 @@ export const common: CommonShape = {
     selectLabel: 'भाषा चुनें',
     changed: 'भाषा {name} में बदल गई।',
   },
+  actions: {
+    back: 'वापस जाएं',
+    close: 'बंद करें',
+  },
+  roles: {
+    citizen: 'नागरिक',
+    doctor: 'चिकित्सक',
+    pharmacist: 'फार्मासिस्ट',
+    admin: 'जिला प्रशासक',
+  },
 };

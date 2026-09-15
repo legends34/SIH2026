@@ -1,6 +1,8 @@
 // SAFETY-CRITICAL: reviewed string only. Do NOT soften or add reassurance.
 
 export const emergency = {
+  call108: 'Call 108 — Ambulance',
+  nearestFacility: 'Nearest emergency: {facilityName} ({distance} km)',
   overlay: {
     headline: 'Call for help right now.',
     call108: 'Call 108 — Ambulance',

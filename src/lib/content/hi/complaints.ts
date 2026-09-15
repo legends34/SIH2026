@@ -4,6 +4,11 @@ type DeepStringify<T> = { [K in keyof T]: T[K] extends Record<string, unknown> ?
 
 export const complaints: Shape = {
   title: 'फीडबैक और शिकायतें',
+  generate: 'शिकायत पूर्वावलोकन बनाएं',
+  submit: 'आधिकारिक शिकायत दर्ज करें',
+  preview: {
+    title: 'शिकायत विवरण की समीक्षा और संपादन',
+  },
   form: {
     title: 'क्या हुआ?',
     typeLabel: 'प्रकार',
