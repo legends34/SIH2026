@@ -1,8 +1,42 @@
 /**
- * src/types/index.ts — Lane B Data Contracts v1
+ * src/types/index.ts — Integration Data Contract (Lanes B + C)
  * The single source of truth for all data shapes across every lane.
  * DO NOT edit without going through the B9 change process.
+ *
+ * Lane B owns: entity types (Patient, User, Facility, Slot, Appointment, etc.)
+ * Lane C owns: triage vocabulary and engine types (re-exported below from ./lib/triage/types)
+ *
+ * KNOWN BLOCKER (cross-lane-issues.md #6):
+ *   - DepartmentCode: Lane B mock data uses 'general_opd'/'paediatrics' style codes
+ *     while Lane C triage engine uses 'GEN_MED'/'PAEDS'. DepartmentCode is kept as
+ *     `string` here for compatibility. A team decision is required before Lane A UI
+ *     can display consistent department labels. See docs/qa/cross-lane-issues.md #6.
+ *   - FacilityTier: Lane B mock data uses lowercase ('phc','chc','dh') while Lane C
+ *     uses uppercase ('PHC','CHC','DH'). Both sets are defined below. See issue #6.
  */
+
+// ─────────────────────────────────────────────
+// Re-export Lane C triage vocabulary and engine types
+// These are the authoritative triage types — do not duplicate here.
+// ─────────────────────────────────────────────
+export type {
+  UrgencyBand,
+  DepartmentCode as TriageDepartmentCode,
+  FacilityTier as TriageFacilityTier,
+  SymptomId,
+  AgeBand,
+  Sex as TriageSex,
+  PregnancyStatus,
+  DurationBand,
+  TriageModifiers,
+  SupportedLanguage,
+  GeoLocation,
+  TriageInput,
+  TriageResult,
+  FacilityLoadMap,
+  TriageContext,
+  RedFlagRule,
+} from './lib/triage/types';
 
 // ─────────────────────────────────────────────
 // ID Types — template literals catch wrong-type mistakes at compile time
@@ -68,30 +102,15 @@ export const AUDIT_ACTION_TYPES = [
 ] as const;
 export type AuditActionType = (typeof AUDIT_ACTION_TYPES)[number];
 
-export const URGENCY_BANDS = ['self_care', 'routine', 'urgent', 'emergency'] as const;
-export type UrgencyBand = (typeof URGENCY_BANDS)[number];
-
 export const SEX_VALUES = ['M', 'F', 'O'] as const;
+/** Lane B Sex enum (M/F/O on patient records). For triage sex, see TriageSex from Lane C. */
 export type Sex = (typeof SEX_VALUES)[number];
 
-// Triage vocabulary — mirrors docs/triage/vocabulary.md
-export const DEPARTMENT_CODES = [
-  'general_opd', 'maternal_child_health', 'paediatrics',
-  'obstetrics', 'general_surgery', 'dental', 'emergency'
-] as const;
+// Triage vocabulary stubs removed — Lane C provides the canonical definitions.
+// Import from './lib/triage/types' or from '@/types' (which re-exports them above).
+// See cross-lane-issues.md #6 for the DepartmentCode / FacilityTier vocabulary conflict.
 
-export const SYMPTOM_IDS = [
-  'fever', 'cough', 'breathlessness', 'chest_pain', 'headache',
-  'vomiting', 'diarrhoea', 'abdominal_pain', 'rash', 'injury',
-  'bleeding', 'unconscious', 'convulsion', 'eye_problem', 'ear_problem'
-] as const;
-export type SymptomId = (typeof SYMPTOM_IDS)[number];
 
-export const RED_FLAG_RULE_IDS = [
-  'unconscious_adult', 'convulsion_child', 'heavy_bleeding',
-  'breathlessness_severe', 'chest_pain_adult'
-] as const;
-export type RedFlagRuleId = (typeof RED_FLAG_RULE_IDS)[number];
 
 // ─────────────────────────────────────────────
 // Core Entities
@@ -319,34 +338,11 @@ export interface AuditLogEntry {
 // ─────────────────────────────────────────────
 // Triage Types
 // ─────────────────────────────────────────────
+// Lane C (src/lib/triage/types.ts) is the authoritative source.
+// TriageInput, TriageResult, SymptomId, UrgencyBand, RedFlagRule, etc.
+// are all re-exported at the top of this file as named exports.
 
-export interface TriageInput {
-  patientId: PatientId;
-  /** Patient age in months (handles infants precisely) */
-  ageMonths: number;
-  sex: Sex;
-  pregnant?: boolean;
-  symptomIds: SymptomId[];
-  /** Optional free text in patient's language — for display only, never parsed */
-  freeText?: string;
-  language: string;
-  location?: { latitude: number; longitude: number };
-}
 
-/**
- * TriageResult — NO free-text clinical string fields.
- * All outputs are structured IDs and numbers so they can be validated,
- * translated, and audited. See Decision 9 in docs/decisions.md.
- */
-export interface TriageResult {
-  urgency: UrgencyBand;
-  departmentCode: DepartmentCode;
-  /** Confidence of the recommendation, 0 (low) to 1 (high) */
-  confidence: number;
-  recommendedFacilityIds: FacilityId[];
-  firedRuleIds: RedFlagRuleId[];
-  matchedSymptomIds: SymptomId[];
-}
 
 // ─────────────────────────────────────────────
 // Analytics Aggregates
