@@ -36,7 +36,7 @@ export type {
   FacilityLoadMap,
   TriageContext,
   RedFlagRule,
-} from './lib/triage/types';
+} from '../lib/triage/types';
 
 // ─────────────────────────────────────────────
 // ID Types — template literals catch wrong-type mistakes at compile time

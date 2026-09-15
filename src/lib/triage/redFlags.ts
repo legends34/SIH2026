@@ -202,7 +202,7 @@ export const RED_FLAG_RULES: readonly RedFlagRule[] = [
   {
     id: 'RF_019',
     presentation: 'Obstetric haemorrhage during pregnancy',
-    populationPredicate: (mod) => mod?.pregnancyStatus === 'pregnant',
+    populationPredicate: (mod: TriageModifiers | undefined) => mod?.pregnancyStatus === 'pregnant',
     anyOf: ['pregnancy_bleeding'],
     department: 'EMERGENCY',
     sourceTitle: 'WHO Recommendations for Prevention and Treatment of Maternal Haemorrhage',
@@ -214,7 +214,7 @@ export const RED_FLAG_RULES: readonly RedFlagRule[] = [
   {
     id: 'RF_020',
     presentation: 'Obstetric eclampsia / convulsion in pregnancy',
-    populationPredicate: (mod) =>
+    populationPredicate: (mod: TriageModifiers | undefined) =>
       mod?.pregnancyStatus === 'pregnant' || mod?.pregnancyStatus === 'postpartum',
     anyOf: ['pregnancy_convulsion', 'fits'],
     department: 'EMERGENCY',
@@ -227,7 +227,7 @@ export const RED_FLAG_RULES: readonly RedFlagRule[] = [
   {
     id: 'RF_021',
     presentation: 'Impending eclampsia / severe hypertension syndrome',
-    populationPredicate: (mod) => mod?.pregnancyStatus === 'pregnant',
+    populationPredicate: (mod: TriageModifiers | undefined) => mod?.pregnancyStatus === 'pregnant',
     anyOf: ['pregnancy_severe_headache_vision'],
     department: 'EMERGENCY',
     sourceTitle: 'NHM Dakshata Guidelines for Maternal Care (GoI)',
@@ -239,7 +239,7 @@ export const RED_FLAG_RULES: readonly RedFlagRule[] = [
   {
     id: 'RF_022',
     presentation: 'Markedly reduced or absent fetal movements',
-    populationPredicate: (mod) => mod?.pregnancyStatus === 'pregnant',
+    populationPredicate: (mod: TriageModifiers | undefined) => mod?.pregnancyStatus === 'pregnant',
     anyOf: ['reduced_fetal_movement'],
     department: 'EMERGENCY',
     sourceTitle: 'RCOG Green-top Guideline No. 57: Reduced Fetal Movements',
@@ -251,7 +251,7 @@ export const RED_FLAG_RULES: readonly RedFlagRule[] = [
   {
     id: 'RF_023',
     presentation: 'Severe postpartum haemorrhage (PPH)',
-    populationPredicate: (mod) => mod?.pregnancyStatus === 'postpartum',
+    populationPredicate: (mod: TriageModifiers | undefined) => mod?.pregnancyStatus === 'postpartum',
     anyOf: ['postpartum_bleeding', 'heavy_bleeding'],
     department: 'EMERGENCY',
     sourceTitle: 'MoHFW Guidelines for Management of Postpartum Haemorrhage',
@@ -263,7 +263,7 @@ export const RED_FLAG_RULES: readonly RedFlagRule[] = [
   {
     id: 'RF_024',
     presentation: 'Neonatal refusal to feed / inability to suckle',
-    populationPredicate: (mod) =>
+    populationPredicate: (mod: TriageModifiers | undefined) =>
       mod?.ageBand === 'neonate' || mod?.ageBand === 'infant',
     anyOf: ['infant_not_feeding'],
     department: 'EMERGENCY',
@@ -276,7 +276,7 @@ export const RED_FLAG_RULES: readonly RedFlagRule[] = [
   {
     id: 'RF_025',
     presentation: 'Neonatal or infant lethargy / floppiness',
-    populationPredicate: (mod) =>
+    populationPredicate: (mod: TriageModifiers | undefined) =>
       mod?.ageBand === 'neonate' || mod?.ageBand === 'infant',
     anyOf: ['infant_lethargy'],
     department: 'EMERGENCY',
@@ -289,7 +289,7 @@ export const RED_FLAG_RULES: readonly RedFlagRule[] = [
   {
     id: 'RF_026',
     presentation: 'Neonatal fast breathing / severe chest indrawing',
-    populationPredicate: (mod) =>
+    populationPredicate: (mod: TriageModifiers | undefined) =>
       mod?.ageBand === 'neonate' || mod?.ageBand === 'infant' || mod?.ageBand === 'child',
     anyOf: ['chest_indrawing', 'infant_fast_breathing'],
     department: 'EMERGENCY',
@@ -302,7 +302,7 @@ export const RED_FLAG_RULES: readonly RedFlagRule[] = [
   {
     id: 'RF_027',
     presentation: 'Neonatal fever or hypothermia (<2 months)',
-    populationPredicate: (mod) => mod?.ageBand === 'neonate',
+    populationPredicate: (mod: TriageModifiers | undefined) => mod?.ageBand === 'neonate',
     anyOf: ['infant_fever', 'infant_hypothermia', 'high_fever'],
     department: 'EMERGENCY',
     sourceTitle: 'WHO Young Infant Clinical Guidelines',
@@ -404,12 +404,12 @@ export function evaluateRedFlags(
 
     let allOfMatch = true;
     if (rule.allOf && rule.allOf.length > 0) {
-      allOfMatch = rule.allOf.every((s) => symptomSet.has(s));
+      allOfMatch = rule.allOf.every((s: SymptomId) => symptomSet.has(s));
     }
 
     let anyOfMatch = true;
     if (rule.anyOf && rule.anyOf.length > 0) {
-      anyOfMatch = rule.anyOf.some((s) => symptomSet.has(s));
+      anyOfMatch = rule.anyOf.some((s: SymptomId) => symptomSet.has(s));
     }
 
     if (allOfMatch && anyOfMatch && (rule.allOf || rule.anyOf)) {

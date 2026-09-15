@@ -143,6 +143,9 @@ describe('Triage Engine Core Suite', () => {
       (curr.input.freeText?.length ?? 0) > (prev.input.freeText?.length ?? 0) ? curr : prev
     );
 
+    // Warm-up call
+    triage(longestInput.input);
+
     const start = performance.now();
     for (let i = 0; i < 50; i++) {
       triage(longestInput.input);

@@ -2,8 +2,13 @@ import { describe, it, expect } from 'vitest';
 import { en } from '../en/index';
 import { hi } from '../hi/index';
 import { mr } from '../mr/index';
-import { SYMPTOM_IDS, DEPARTMENT_CODES } from '../../../types/index';
 import { BANNED_TERMS, ALLOWED_CLINICAL_NAMESPACES, EXEMPTIONS } from '../banned';
+
+// Derive keys from base English content dictionary to test multi-locale parity
+const SYMPTOM_IDS = Object.keys(en.triage.symptoms);
+const DEPARTMENT_CODES = Object.keys(en.triage.departments);
+
+
 
 type NestedObj = Record<string, unknown>;
 

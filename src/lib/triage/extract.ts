@@ -17,6 +17,48 @@ interface PhraseEntry {
   tokenCount: number;
 }
 
+function buildPhraseEntries(langs: SupportedLanguage[]): PhraseEntry[] {
+  const entries: PhraseEntry[] = [];
+  const seen = new Set<string>();
+  for (const lang of langs) {
+    const lexicon = LEXICONS[lang];
+    if (!lexicon) continue;
+    for (const [symptomId, phrases] of Object.entries(lexicon) as [SymptomId, readonly string[]][]) {
+      for (const rawPhrase of phrases) {
+        const normPhrase = normalizeText(rawPhrase);
+        if (!normPhrase || seen.has(`${normPhrase}:${symptomId}`)) continue;
+        seen.add(`${normPhrase}:${symptomId}`);
+
+        const pTokens = normPhrase.split(/\s+/).filter(Boolean);
+        if (pTokens.length > 0) {
+          entries.push({
+            phrase: normPhrase,
+            phraseTokens: pTokens,
+            symptomId,
+            tokenCount: pTokens.length,
+          });
+        }
+      }
+    }
+  }
+  entries.sort((a, b) => b.tokenCount - a.tokenCount);
+  return entries;
+}
+
+const ALL_NEGATION_CUES = new Set<string>();
+const ALL_CLAUSE_BREAKS = new Set<string>();
+for (const lang of ['en', 'hi', 'mr'] as SupportedLanguage[]) {
+  NEGATION_CUES[lang]?.forEach((c) => ALL_NEGATION_CUES.add(normalizeText(c)));
+  CLAUSE_BREAKS[lang]?.forEach((b) => ALL_CLAUSE_BREAKS.add(normalizeText(b)));
+}
+
+const PHRASE_CACHE: Record<string, PhraseEntry[]> = {
+  default: buildPhraseEntries(['en', 'hi', 'mr']),
+  en: buildPhraseEntries(['en', 'hi', 'mr']),
+  hi: buildPhraseEntries(['hi', 'en', 'mr']),
+  mr: buildPhraseEntries(['mr', 'en', 'hi']),
+};
+
 export function extractSymptoms(
   freeText: string,
   language?: SupportedLanguage
@@ -31,49 +73,9 @@ export function extractSymptoms(
     return { present: [], negated: [], matchedPhrases: [], totalTokens: 0 };
   }
 
-  // Compile active lexicons: primary language + fallbacks (to handle code-mixing)
-  const langsToSearch: SupportedLanguage[] = language
-    ? [language, ...(['en', 'hi', 'mr'] as SupportedLanguage[]).filter((l) => l !== language)]
-    : ['en', 'hi', 'mr'];
-
-  // Collect all phrases and sort by longest token count first
-  const phraseEntries: PhraseEntry[] = [];
-  const seenPhrases = new Set<string>();
-
-  for (const lang of langsToSearch) {
-    const lexicon = LEXICONS[lang];
-    if (!lexicon) continue;
-
-    for (const [symptomId, phrases] of Object.entries(lexicon) as [SymptomId, readonly string[]][]) {
-      for (const rawPhrase of phrases) {
-        const normPhrase = normalizeText(rawPhrase);
-        if (!normPhrase || seenPhrases.has(`${normPhrase}:${symptomId}`)) continue;
-        seenPhrases.add(`${normPhrase}:${symptomId}`);
-
-        const pTokens = normPhrase.split(/\s+/).filter(Boolean);
-        if (pTokens.length > 0) {
-          phraseEntries.push({
-            phrase: normPhrase,
-            phraseTokens: pTokens,
-            symptomId,
-            tokenCount: pTokens.length,
-          });
-        }
-      }
-    }
-  }
-
-  // Sort longest first
-  phraseEntries.sort((a, b) => b.tokenCount - a.tokenCount);
-
-  // Identify clause breaks and negation cue positions in the token stream
-  const allNegationCues = new Set<string>();
-  const allClauseBreaks = new Set<string>();
-
-  for (const lang of ['en', 'hi', 'mr'] as SupportedLanguage[]) {
-    NEGATION_CUES[lang]?.forEach((c) => allNegationCues.add(normalizeText(c)));
-    CLAUSE_BREAKS[lang]?.forEach((b) => allClauseBreaks.add(normalizeText(b)));
-  }
+  const phraseEntries = PHRASE_CACHE[language ?? 'default'] ?? PHRASE_CACHE.default!;
+  const allNegationCues = ALL_NEGATION_CUES;
+  const allClauseBreaks = ALL_CLAUSE_BREAKS;
 
   // Determine token-level negation status
   // A negation cue negates subsequent tokens up to NEGATION_SCOPE_LIMIT (4) tokens
