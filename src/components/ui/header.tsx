@@ -72,7 +72,7 @@ export function Header() {
                 className="select-control patient-select"
               >
                 {householdPatients.map((p) => (
-                  <option key={p.id} value={p.id} data-testid="patient-switcher-option">
+                  <option key={p.id} value={p.id}>
                     👤 {p.name} ({p.sex === 'F' ? 'F' : p.sex === 'M' ? 'M' : 'O'}, {Math.floor((Date.now() - new Date(p.dob).getTime()) / (365.25 * 24 * 3600 * 1000))}y)
                   </option>
                 ))}

@@ -7,6 +7,7 @@ import type { Page } from '@playwright/test';
 /** Known, harmless noise. Every entry needs a reason. Keep this list short. */
 const IGNORED: ReadonlyArray<{ pattern: RegExp; reason: string }> = [
   { pattern: /favicon\.ico/, reason: 'Browsers probe for a favicon on every route; not an app error.' },
+  { pattern: /net::ERR_ABORTED/, reason: 'Next.js aborted prefetch request on navigation.' },
 ];
 
 export interface PageProblems {

@@ -59,7 +59,7 @@ export default function PharmacistInventoryPage() {
                 </tr>
               </thead>
               <tbody>
-                {medicines.slice(0, 15).map((med) => {
+                {medicines.map((med) => {
                   const stockRecord = stockItems.find(
                     (s) => s.facilityId === HERO.phcId && s.medicineId === med.id
                   );

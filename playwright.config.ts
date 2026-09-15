@@ -6,7 +6,7 @@
  */
 import { defineConfig } from '@playwright/test';
 
-const PORT = 4173;
+const PORT = 4174;
 const BASE_URL = `http://127.0.0.1:${PORT}`;
 
 export default defineConfig({
@@ -39,9 +39,9 @@ export default defineConfig({
     },
   ],
   webServer: {
-    command: `npx next build && npx next start --port ${PORT}`,
+    command: `pnpm next start --port ${PORT}`,
     url: BASE_URL,
-    reuseExistingServer: !process.env.CI,
-    timeout: 240_000,
+    reuseExistingServer: false,
+    timeout: 120_000,
   },
 });

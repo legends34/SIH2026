@@ -111,6 +111,38 @@ records.push(
       clinicalNotes: 'BP improving. HbA1c reduced to 6.9%. Continue current medicines. Advise diet and walking.',
       diagnosisCodes: ['I10', 'E11'],
     },
+  },
+  // Follow-up lab report
+  {
+    id: recordId(recCounter++),
+    patientId: HERO.ramesh.patientId,
+    facilityId: HERO.phcId,
+    authorUserId: HERO.doctor.userId,
+    type: 'lab_report',
+    recordedAt: at(-78, '11:30'),
+    data: {
+      testName: 'HbA1c & Lipid Panel Follow-up',
+      results: [
+        { parameter: 'HbA1c', value: '6.9', unit: '%', referenceRange: '<5.7' },
+        { parameter: 'Serum Cholesterol', value: '185', unit: 'mg/dL', referenceRange: '<200' },
+      ],
+      reportedAt: at(-77, '15:00'),
+    },
+  },
+  // Prescription refill
+  {
+    id: recordId(recCounter++),
+    patientId: HERO.ramesh.patientId,
+    facilityId: HERO.phcId,
+    authorUserId: HERO.doctor.userId,
+    type: 'prescription',
+    recordedAt: at(-78, '12:00'),
+    data: {
+      medicines: [
+        { medicineId: HERO.medicine.id, dosage: '1 tablet', frequency: 'Twice daily with meals', durationDays: 90 },
+        { medicineId: 'med_0008', dosage: '1 tablet', frequency: 'Once daily morning', durationDays: 90 },
+      ],
+    },
   }
 );
 
