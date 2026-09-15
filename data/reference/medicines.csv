@@ -1,0 +1,81 @@
+id,generic_name,strength,dosage_form,therapeutic_category,nlem_level
+med_0001,Paracetamol,500 mg,Tablet,Analgesic,P
+med_0002,Amoxicillin,250 mg,Capsule,Antibiotic,P
+med_0003,Amoxicillin,500 mg,Capsule,Antibiotic,P
+med_0004,Ibuprofen,400 mg,Tablet,NSAID,P
+med_0005,Ciprofloxacin,500 mg,Tablet,Antibiotic,S
+med_0006,Metronidazole,400 mg,Tablet,Antiprotozoal,P
+med_0007,Omeprazole,20 mg,Capsule,PPI,P
+med_0008,Amlodipine,5 mg,Tablet,Antihypertensive,P
+med_0009,Amlodipine,10 mg,Tablet,Antihypertensive,P
+med_0010,Atenolol,50 mg,Tablet,Beta Blocker,P
+med_0011,Enalapril,5 mg,Tablet,ACE Inhibitor,P
+med_0012,Losartan,50 mg,Tablet,ARB,S
+med_0013,Hydrochlorothiazide,25 mg,Tablet,Diuretic,P
+med_0014,Furosemide,40 mg,Tablet,Loop Diuretic,P
+med_0015,Aspirin,75 mg,Tablet,Antiplatelet,P
+med_0016,Atorvastatin,10 mg,Tablet,Statin,P
+med_0017,Atorvastatin,20 mg,Tablet,Statin,P
+med_0018,Glibenclamide,5 mg,Tablet,Antidiabetic,P
+med_0019,Glimepiride,2 mg,Tablet,Antidiabetic,S
+med_0020,Insulin Regular,100 IU/ml,Injection,Antidiabetic,P
+med_0021,Levothyroxine,50 mcg,Tablet,Thyroid Hormone,P
+med_0022,Prednisolone,5 mg,Tablet,Corticosteroid,P
+med_0023,Dexamethasone,4 mg,Injection,Corticosteroid,P
+med_0024,Salbutamol,100 mcg,Inhaler,Bronchodilator,P
+med_0025,Beclomethasone,100 mcg,Inhaler,Inhaled Steroid,S
+med_0026,Cetirizine,10 mg,Tablet,Antihistamine,P
+med_0027,Chlorpheniramine,4 mg,Tablet,Antihistamine,P
+med_0028,Ranitidine,150 mg,Tablet,H2 Blocker,P
+med_0029,Antacid,—,Suspension,Antacid,P
+med_0030,ORS,—,Sachet,Rehydration,P
+med_0031,Zinc Sulphate,20 mg,Tablet,Supplement,P
+med_0032,Iron + Folic Acid,100+0.5mg,Tablet,Haematinic,P
+med_0033,Calcium Carbonate,500 mg,Tablet,Supplement,P
+med_0034,Vitamin D3,60000 IU,Capsule,Supplement,S
+med_0035,Albendazole,400 mg,Tablet,Anthelmintic,P
+med_0036,Cotrimoxazole,480 mg,Tablet,Antibiotic,P
+med_0037,Doxycycline,100 mg,Capsule,Antibiotic,S
+med_0038,Azithromycin,500 mg,Tablet,Antibiotic,S
+med_0039,Cefixime,200 mg,Capsule,Antibiotic,S
+med_0040,Cloxacillin,250 mg,Capsule,Antibiotic,S
+med_0041,Gentamicin,80 mg,Injection,Antibiotic,S
+med_0042,Metformin,500 mg,Tablet,Antidiabetic,P
+med_0043,Metformin,850 mg,Tablet,Antidiabetic,P
+med_0044,Fluconazole,150 mg,Tablet,Antifungal,P
+med_0045,Clotrimazole,1%,Cream,Antifungal,P
+med_0046,Betamethasone,0.1%,Cream,Topical Steroid,P
+med_0047,Silver Sulfadiazine,1%,Cream,Burn Care,P
+med_0048,Povidone Iodine,5%,Solution,Antiseptic,P
+med_0049,Hydrogen Peroxide,3%,Solution,Antiseptic,P
+med_0050,Spirit Surgical,70%,Solution,Antiseptic,P
+med_0051,Normal Saline (0.9%),500 ml,IV Fluid,Fluid Replacement,P
+med_0052,Ringer Lactate,500 ml,IV Fluid,Fluid Replacement,P
+med_0053,Dextrose 5%,500 ml,IV Fluid,Fluid Replacement,P
+med_0054,Ondansetron,4 mg,Tablet,Antiemetic,P
+med_0055,Metoclopramide,10 mg,Tablet,Antiemetic,P
+med_0056,Domperidone,10 mg,Tablet,Antiemetic,P
+med_0057,Diclofenac,50 mg,Tablet,NSAID,P
+med_0058,Diclofenac,75 mg/ml,Injection,NSAID,P
+med_0059,Tramadol,50 mg,Capsule,Opioid Analgesic,S
+med_0060,Morphine,10 mg,Tablet,Palliative Care,T
+med_0061,Diazepam,5 mg,Tablet,Anxiolytic,P
+med_0062,Lorazepam,2 mg,Tablet,Anxiolytic,S
+med_0063,Phenytoin,100 mg,Tablet,Antiepileptic,P
+med_0064,Sodium Valproate,200 mg,Tablet,Antiepileptic,S
+med_0065,Carbamazepine,200 mg,Tablet,Antiepileptic,P
+med_0066,Amitriptyline,25 mg,Tablet,Antidepressant,P
+med_0067,Fluoxetine,20 mg,Capsule,Antidepressant,S
+med_0068,Haloperidol,5 mg,Tablet,Antipsychotic,P
+med_0069,Olanzapine,5 mg,Tablet,Antipsychotic,S
+med_0070,Rabies Vaccine,2.5 IU,Injection,Vaccine,P
+med_0071,Tetanus Toxoid,0.5 ml,Injection,Vaccine,P
+med_0072,Anti-Rabies Serum,1000 IU,Injection,Immunoglobulin,S
+med_0073,Anti-Snake Venom,10 ml,Injection,Antiserum,P
+med_0074,Adrenaline,1 mg/ml,Injection,Emergency Drug,P
+med_0075,Atropine,0.6 mg/ml,Injection,Emergency Drug,P
+med_0076,Hydrocortisone,100 mg,Injection,Emergency Drug,P
+med_0077,Oxytocin,5 IU/ml,Injection,Obstetric Drug,P
+med_0078,Misoprostol,200 mcg,Tablet,Obstetric Drug,P
+med_0079,Magnesium Sulphate,50%,Injection,Obstetric Drug,P
+med_0080,Methergine,0.2 mg,Tablet,Obstetric Drug,P
