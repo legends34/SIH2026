@@ -21,11 +21,13 @@ export default function LanguageSelectPage() {
   };
 
   return (
-    <div className="auth-wrapper" style={{ maxWidth: 540, margin: '2rem auto' }}>
-      <div className="card" style={{ padding: '2rem' }}>
-        <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-          <span style={{ fontSize: '3rem' }}>🌐</span>
-          <h1 className="page-title" style={{ marginTop: '0.5rem' }}>
+    <div className="auth-wrapper" style={{ maxWidth: 560, margin: '2.5rem auto' }}>
+      <div className="card" style={{ padding: '2.25rem', borderTop: '4px solid var(--saffron-500)' }}>
+        <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 56, height: 56, borderRadius: '50%', background: 'var(--primary-50)', marginBottom: '0.75rem', fontSize: '1.75rem', border: '1px solid var(--primary-100)' }}>
+            🌐
+          </div>
+          <h1 className="page-title" style={{ fontSize: '1.6rem' }}>
             {t('auth.language.title') || 'Select Your Language / भाषा चुनें'}
           </h1>
           <p className="page-subtitle">
@@ -47,26 +49,26 @@ export default function LanguageSelectPage() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  padding: '1.2rem 1.5rem',
+                  padding: '1.1rem 1.4rem',
                   borderRadius: 'var(--radius-md)',
-                  border: '2px solid var(--slate-200)',
-                  background: 'var(--white)',
+                  border: '1.5px solid var(--border-color)',
+                  background: 'var(--bg-surface)',
                   textAlign: 'left',
                   width: '100%',
                 }}
               >
                 <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                  <span style={{ fontSize: '1.8rem' }}>{info.flag}</span>
+                  <span style={{ fontSize: '1.8rem', lineHeight: 1 }}>{info.flag}</span>
                   <div>
-                    <strong style={{ fontSize: '1.25rem', color: 'var(--slate-900)', display: 'block' }}>
+                    <strong style={{ fontSize: '1.2rem', color: 'var(--primary-900)', display: 'block' }}>
                       {info.title}
                     </strong>
-                    <span style={{ fontSize: '0.85rem', color: 'var(--slate-600)' }}>
+                    <span style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
                       {info.subtitle}
                     </span>
                   </div>
                 </div>
-                <span style={{ fontSize: '1.25rem', color: 'var(--primary-700)' }}>➔</span>
+                <span style={{ fontSize: '1.25rem', color: 'var(--saffron-500)', fontWeight: 800 }}>➔</span>
               </button>
             );
           })}

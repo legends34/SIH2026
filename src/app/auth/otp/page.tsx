@@ -22,11 +22,13 @@ export default function OtpPage() {
   };
 
   return (
-    <div className="auth-wrapper" style={{ maxWidth: 480, margin: '2rem auto' }}>
-      <div className="card" style={{ padding: '2rem' }}>
-        <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-          <span style={{ fontSize: '2.5rem' }}>🔐</span>
-          <h1 className="page-title" style={{ marginTop: '0.5rem' }}>
+    <div className="auth-wrapper" style={{ maxWidth: 500, margin: '2.5rem auto' }}>
+      <div className="card" style={{ padding: '2.25rem', borderTop: '4px solid var(--teal-600)' }}>
+        <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 56, height: 56, borderRadius: '50%', background: 'var(--teal-50)', marginBottom: '0.75rem', fontSize: '1.75rem', border: '1px solid var(--teal-100)' }}>
+            🔐
+          </div>
+          <h1 className="page-title" style={{ fontSize: '1.6rem' }}>
             {t('auth.otp.title') || 'Verify OTP'}
           </h1>
           <p className="page-subtitle">
@@ -48,19 +50,19 @@ export default function OtpPage() {
               onChange={(e) => setOtp(e.target.value)}
               placeholder="123456"
               maxLength={6}
-              style={{ fontSize: '1.4rem', letterSpacing: '0.3em', textAlign: 'center' }}
+              style={{ fontSize: '1.5rem', letterSpacing: '0.35em', textAlign: 'center', fontWeight: 800 }}
               required
             />
-            <span style={{ fontSize: '0.8rem', color: 'var(--slate-500)', display: 'block', marginTop: '0.35rem', textAlign: 'center' }}>
+            <span style={{ fontSize: '0.8rem', color: 'var(--emerald-800)', display: 'block', marginTop: '0.45rem', textAlign: 'center', padding: '0.35rem 0.65rem', background: 'var(--emerald-50)', borderRadius: 'var(--radius-xs)' }}>
               ✓ Demo mode: any 6 digits accepted
             </span>
           </div>
 
           <button
             type="submit"
-            className="btn btn-success btn-full"
+            className="btn btn-teal btn-full"
             data-testid="auth-verify"
-            style={{ marginTop: '1rem' }}
+            style={{ marginTop: '1.25rem' }}
           >
             {t('auth.otp.verify') || 'Verify & Continue / सत्यापित करें'} ➔
           </button>

@@ -6,6 +6,7 @@ import { usePathname, useRouter } from 'next/navigation';
 import { useAppState } from '@/lib/state/app-state';
 import { LOCALES, LOCALE_NATIVE_NAME, type Locale } from '@/lib/content/locales';
 import { HERO } from '@/lib/mock-data/hero';
+import { MaharashtraEmblemPlaceholder } from './maharashtra-emblem';
 
 export function Header() {
   const { locale, setLocale, t, session, setSession, activePatient, setActivePatientId, householdPatients } = useAppState();
@@ -48,98 +49,134 @@ export function Header() {
 
   return (
     <header className="site-header">
-      <div className="header-container">
-        <div className="header-brand-group">
-          <Link href={session?.role === 'DOCTOR' ? '/doctor' : session?.role === 'PHARMACIST' ? '/pharmacist' : session?.role === 'DISTRICT_ADMIN' ? '/admin' : '/patient'} className="brand-logo">
-            <span className="brand-emblem">🏥</span>
-            <div className="brand-text">
-              <span className="brand-title">स्वास्थ्य</span>
-              <span className="brand-sub">Swasthya · National Health Portal</span>
+      {/* ── Tier 1: Government Authority Bar ── */}
+      <div className="gov-top-bar">
+        <div className="header-container gov-top-container">
+          <div className="gov-identity-group">
+            <MaharashtraEmblemPlaceholder size={38} className="gov-seal-svg" />
+            <div className="gov-title-stack">
+              <span className="gov-state-name">महाराष्ट्र शासन · Government of Maharashtra</span>
+              <span className="gov-dept-name">सार्वजनिक आरोग्य विभाग · Public Health Department</span>
             </div>
-          </Link>
-        </div>
+          </div>
 
-        {/* Header Controls */}
-        <div className="header-controls">
-          {/* Household Switcher for Citizen */}
-          {!isAuthPage && session?.role === 'CITIZEN' && (
-            <div className="patient-quick-switcher">
-              <label htmlFor="header-patient-select" className="sr-only">Active Patient</label>
+          <div className="header-controls">
+            {/* Household Switcher for Citizen */}
+            {!isAuthPage && session?.role === 'CITIZEN' && (
+              <div className="patient-quick-switcher">
+                <label htmlFor="header-patient-select" className="sr-only">Active Patient</label>
+                <select
+                  id="header-patient-select"
+                  value={activePatient.id}
+                  onChange={(e) => setActivePatientId(e.target.value)}
+                  className="select-control patient-select"
+                  title="Switch family member"
+                >
+                  {householdPatients.map((p) => (
+                    <option key={p.id} value={p.id}>
+                      👤 {p.name} ({p.sex === 'F' ? 'F' : p.sex === 'M' ? 'M' : 'O'}, {Math.floor((Date.now() - new Date(p.dob).getTime()) / (365.25 * 24 * 3600 * 1000))}y)
+                    </option>
+                  ))}
+                </select>
+              </div>
+            )}
+
+            {/* Role Switcher for judges / presentation */}
+            <div className="role-switcher">
               <select
-                id="header-patient-select"
-                value={activePatient.id}
-                onChange={(e) => setActivePatientId(e.target.value)}
-                className="select-control patient-select"
+                value={session?.role ?? 'CITIZEN'}
+                onChange={(e) => handleRoleChange(e.target.value as any)}
+                className="select-control role-select"
+                title="Switch demo persona"
               >
-                {householdPatients.map((p) => (
-                  <option key={p.id} value={p.id}>
-                    👤 {p.name} ({p.sex === 'F' ? 'F' : p.sex === 'M' ? 'M' : 'O'}, {Math.floor((Date.now() - new Date(p.dob).getTime()) / (365.25 * 24 * 3600 * 1000))}y)
+                <option value="CITIZEN">👤 {t('common.roles.citizen') || 'Citizen'}</option>
+                <option value="DOCTOR">🩺 {t('common.roles.doctor') || 'Doctor'}</option>
+                <option value="PHARMACIST">💊 {t('common.roles.pharmacist') || 'Pharmacist'}</option>
+                <option value="DISTRICT_ADMIN">📊 {t('common.roles.admin') || 'District Admin'}</option>
+              </select>
+            </div>
+
+            {/* Language Selector */}
+            <div className="language-selector">
+              <select
+                value={locale}
+                onChange={(e) => setLocale(e.target.value as Locale)}
+                className="select-control lang-select"
+                aria-label="Select Language"
+              >
+                {LOCALES.map((l) => (
+                  <option key={l} value={l}>
+                    {LOCALE_NATIVE_NAME[l]}
                   </option>
                 ))}
               </select>
             </div>
-          )}
-
-          {/* Role Switcher for judges / presentation */}
-          <div className="role-switcher">
-            <select
-              value={session?.role ?? 'CITIZEN'}
-              onChange={(e) => handleRoleChange(e.target.value as any)}
-              className="select-control role-select"
-              title="Switch demo persona"
-            >
-              <option value="CITIZEN">👤 {t('common.roles.citizen') || 'Citizen'}</option>
-              <option value="DOCTOR">🩺 {t('common.roles.doctor') || 'Doctor'}</option>
-              <option value="PHARMACIST">💊 {t('common.roles.pharmacist') || 'Pharmacist'}</option>
-              <option value="DISTRICT_ADMIN">📊 {t('common.roles.admin') || 'District Admin'}</option>
-            </select>
-          </div>
-
-          {/* Language Selector */}
-          <div className="language-selector">
-            <select
-              value={locale}
-              onChange={(e) => setLocale(e.target.value as Locale)}
-              className="select-control lang-select"
-              aria-label="Select Language"
-            >
-              {LOCALES.map((l) => (
-                <option key={l} value={l}>
-                  {LOCALE_NATIVE_NAME[l]}
-                </option>
-              ))}
-            </select>
           </div>
         </div>
       </div>
 
-      {/* Navigation Sub-bar for Citizens */}
+      {/* ── Tier 2: Subordinate Portal Bar ── */}
+      <div className="portal-sub-bar">
+        <div className="header-container portal-bar-container">
+          <div className="header-brand-group">
+            <Link
+              href={session?.role === 'DOCTOR' ? '/doctor' : session?.role === 'PHARMACIST' ? '/pharmacist' : session?.role === 'DISTRICT_ADMIN' ? '/admin' : '/patient'}
+              className="brand-logo"
+            >
+              <div className="brand-icon-wrap">
+                <span className="brand-emblem" aria-hidden="true">🏥</span>
+              </div>
+              <div className="brand-text">
+                <div className="brand-title-row">
+                  <span className="brand-title">स्वास्थ्य</span>
+                  <span className="brand-badge">SWASTHYA</span>
+                </div>
+                <span className="brand-sub">Universal Rural Healthcare Access Architecture</span>
+              </div>
+            </Link>
+          </div>
+
+          <div className="portal-quick-info">
+            <span className="nha-pill">ABDM Integrated</span>
+          </div>
+        </div>
+      </div>
+
+      {/* Navigation Sub-Bar for Citizens */}
       {!isAuthPage && session?.role === 'CITIZEN' && (
-        <nav className="patient-nav">
+        <nav className="patient-nav" aria-label="Citizen Portal Navigation">
           <div className="nav-container">
             <Link href="/patient" className={`nav-link ${pathname === '/patient' ? 'active' : ''}`}>
-              🏠 {t('patientHome.title') || 'Home'}
+              <span className="nav-icon" aria-hidden="true">🏠</span>
+              <span>{t('patientHome.title') || 'Home'}</span>
             </Link>
             <Link href="/patient/triage" className={`nav-link ${pathname.startsWith('/patient/triage') ? 'active' : ''}`}>
-              🩺 {t('triage.intro.title') || 'Triage'}
+              <span className="nav-icon" aria-hidden="true">🩺</span>
+              <span>{t('triage.intro.title') || 'Triage'}</span>
             </Link>
             <Link href="/patient/facilities" className={`nav-link ${pathname.startsWith('/patient/facilities') || pathname.startsWith('/patient/book') ? 'active' : ''}`}>
-              🏥 {t('facilities.title') || 'Facilities'}
+              <span className="nav-icon" aria-hidden="true">🏥</span>
+              <span>{t('facilities.title') || 'Facilities'}</span>
             </Link>
             <Link href={`/patient/queue/${HERO.phcId}`} className={`nav-link ${pathname.startsWith('/patient/queue') ? 'active' : ''}`}>
-              ⏱️ {t('queue.title') || 'Live Queue'}
+              <span className="nav-icon" aria-hidden="true">⏱️</span>
+              <span>{t('queue.title') || 'Live Queue'}</span>
             </Link>
             <Link href="/patient/records" className={`nav-link ${pathname.startsWith('/patient/records') ? 'active' : ''}`}>
-              📋 {t('records.title') || 'Records'}
+              <span className="nav-icon" aria-hidden="true">📋</span>
+              <span>{t('records.title') || 'Records'}</span>
             </Link>
             <Link href="/patient/medicines" className={`nav-link ${pathname.startsWith('/patient/medicines') ? 'active' : ''}`}>
-              💊 {t('medicines.title') || 'Medicines'}
+              <span className="nav-icon" aria-hidden="true">💊</span>
+              <span>{t('medicines.title') || 'Medicines'}</span>
             </Link>
             <Link href="/patient/complaints/new" className={`nav-link ${pathname.startsWith('/patient/complaints') ? 'active' : ''}`}>
-              📢 {t('complaints.title') || 'Grievance'}
+              <span className="nav-icon" aria-hidden="true">📢</span>
+              <span>{t('complaints.title') || 'Grievance'}</span>
             </Link>
             <Link href="/patient/profile" className={`nav-link ${pathname.startsWith('/patient/profile') ? 'active' : ''}`}>
-              👤 {t('profile.title') || 'Profile'}
+              <span className="nav-icon" aria-hidden="true">👤</span>
+              <span>{t('profile.title') || 'Profile'}</span>
             </Link>
           </div>
         </nav>

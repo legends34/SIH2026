@@ -38,8 +38,8 @@ export default function PharmacistInventoryPage() {
         </div>
 
         {/* Stock Ledger Guidelines */}
-        <div className="card" style={{ background: 'var(--primary-50)', border: '1px solid var(--primary-200)' }}>
-          <p style={{ fontSize: '0.9rem', color: 'var(--primary-900)' }}>
+        <div className="card" style={{ background: 'var(--teal-50)', border: '1px solid var(--teal-100)', borderLeft: '5px solid var(--teal-600)' }}>
+          <p style={{ fontSize: '0.9rem', color: 'var(--teal-800)', lineHeight: 1.5 }}>
             📦 <strong>Immutable Stock Ledger:</strong> Restocking entries create append-only audit events in the government ledger. Updates immediately sync to doctor OPD prescribers and citizen stock locators.
           </p>
         </div>
@@ -49,13 +49,13 @@ export default function PharmacistInventoryPage() {
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.9rem', textAlign: 'left' }}>
               <thead>
-                <tr style={{ background: 'var(--slate-100)', color: 'var(--slate-700)', borderBottom: '2px solid var(--slate-200)' }}>
-                  <th style={{ padding: '0.85rem 1rem' }}>Medicine Generic Name</th>
-                  <th style={{ padding: '0.85rem 1rem' }}>Category</th>
-                  <th style={{ padding: '0.85rem 1rem' }}>Current Stock</th>
-                  <th style={{ padding: '0.85rem 1rem' }}>Status</th>
-                  <th style={{ padding: '0.85rem 1rem' }}>Add / Update Quantity</th>
-                  <th style={{ padding: '0.85rem 1rem' }}>Action</th>
+                <tr style={{ background: 'var(--bg-subtle)', color: 'var(--text-secondary)', borderBottom: '2px solid var(--border-color)' }}>
+                  <th style={{ padding: '0.9rem 1.1rem' }}>Medicine Generic Name</th>
+                  <th style={{ padding: '0.9rem 1.1rem' }}>Category</th>
+                  <th style={{ padding: '0.9rem 1.1rem' }}>Current Stock</th>
+                  <th style={{ padding: '0.9rem 1.1rem' }}>Status</th>
+                  <th style={{ padding: '0.9rem 1.1rem' }}>Add / Update Quantity</th>
+                  <th style={{ padding: '0.9rem 1.1rem' }}>Action</th>
                 </tr>
               </thead>
               <tbody>

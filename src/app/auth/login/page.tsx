@@ -15,11 +15,13 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="auth-wrapper" style={{ maxWidth: 480, margin: '2rem auto' }}>
-      <div className="card" style={{ padding: '2rem' }}>
-        <div style={{ textAlign: 'center', marginBottom: '1.5rem' }}>
-          <span style={{ fontSize: '2.5rem' }}>📱</span>
-          <h1 className="page-title" style={{ marginTop: '0.5rem' }}>
+    <div className="auth-wrapper" style={{ maxWidth: 500, margin: '2.5rem auto' }}>
+      <div className="card" style={{ padding: '2.25rem', borderTop: '4px solid var(--primary-900)' }}>
+        <div style={{ textAlign: 'center', marginBottom: '1.75rem' }}>
+          <div style={{ display: 'inline-flex', alignItems: 'center', justifyContent: 'center', width: 56, height: 56, borderRadius: '50%', background: 'var(--primary-50)', marginBottom: '0.75rem', fontSize: '1.75rem', border: '1px solid var(--primary-100)' }}>
+            📱
+          </div>
+          <h1 className="page-title" style={{ fontSize: '1.6rem' }}>
             {t('auth.login.title') || 'Citizen Login'}
           </h1>
           <p className="page-subtitle">
@@ -42,7 +44,7 @@ export default function LoginPage() {
               placeholder="+91 90000 00001"
               required
             />
-            <span style={{ fontSize: '0.8rem', color: 'var(--slate-500)', display: 'block', marginTop: '0.35rem' }}>
+            <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', display: 'block', marginTop: '0.45rem', padding: '0.35rem 0.65rem', background: 'var(--bg-subtle)', borderRadius: 'var(--radius-xs)' }}>
               ℹ️ Demo account pre-filled: Sunita Sharma (+91 90000 00001)
             </span>
           </div>
@@ -51,7 +53,7 @@ export default function LoginPage() {
             type="submit"
             className="btn btn-primary btn-full"
             data-testid="auth-send-otp"
-            style={{ marginTop: '1rem' }}
+            style={{ marginTop: '1.25rem' }}
           >
             {t('auth.login.sendOtp') || 'Get OTP / ओटीपी प्राप्त करें'} ➔
           </button>

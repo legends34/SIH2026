@@ -49,17 +49,17 @@ export default function DoctorOpdQueuePage() {
         </div>
 
         {/* Current Active Patient Box */}
-        <div className="card" style={{ background: 'linear-gradient(to right, #e8f5e9, #f1f8e9)', borderLeft: '6px solid var(--emerald-600)' }}>
+        <div className="card" style={{ background: 'var(--teal-50)', borderLeft: '6px solid var(--teal-600)', borderTop: '1px solid var(--teal-100)', borderRight: '1px solid var(--teal-100)', borderBottom: '1px solid var(--teal-100)' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
             <div>
-              <span style={{ fontSize: '0.8rem', fontWeight: 700, color: 'var(--emerald-800)', textTransform: 'uppercase' }}>
+              <span style={{ fontSize: '0.8rem', fontWeight: 800, color: 'var(--teal-800)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                 CURRENTLY SERVING IN ROOM
               </span>
               <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.75rem', marginTop: '0.2rem' }}>
-                <span className="token-huge" style={{ color: 'var(--emerald-800)', fontSize: '2.5rem' }}>
+                <span className="token-huge" style={{ color: 'var(--teal-800)', fontSize: '2.5rem' }}>
                   Token {nowServing}
                 </span>
-                <strong style={{ fontSize: '1.2rem', color: 'var(--slate-900)' }}>
+                <strong style={{ fontSize: '1.25rem', color: 'var(--primary-900)' }}>
                   {nowServing === 19 ? 'Sunita Sharma (34y, F)' : `Patient Token #${nowServing}`}
                 </strong>
               </div>
@@ -67,8 +67,8 @@ export default function DoctorOpdQueuePage() {
 
             <Link
               href={`/doctor/consult/${HERO.appointment.id}`}
-              className="btn btn-primary"
-              style={{ padding: '0.75rem 1.25rem' }}
+              className="btn btn-teal"
+              style={{ padding: '0.75rem 1.35rem' }}
             >
               🩺 Start / Open Consultation ➔
             </Link>
@@ -76,53 +76,58 @@ export default function DoctorOpdQueuePage() {
         </div>
 
         {/* Live OPD Queue Table */}
-        <div className="card">
-          <h3 style={{ fontSize: '1.15rem', fontWeight: 800, marginBottom: '1rem', color: 'var(--slate-900)' }}>
-            Upcoming Queue / प्रतीक्षारत कतार
-          </h3>
+        <div className="card" style={{ padding: 0, overflow: 'hidden' }}>
+          <div style={{ padding: '1.25rem 1.25rem 0.5rem' }}>
+            <h3 style={{ fontSize: '1.2rem', fontWeight: 800, color: 'var(--primary-900)' }}>
+              Upcoming Queue / प्रतीक्षारत कतार
+            </h3>
+          </div>
 
           <div style={{ overflowX: 'auto' }}>
             <table style={{ width: '100%', borderCollapse: 'collapse', fontSize: '0.9rem', textAlign: 'left' }}>
               <thead>
-                <tr style={{ background: 'var(--slate-100)', color: 'var(--slate-700)', borderBottom: '2px solid var(--slate-200)' }}>
-                  <th style={{ padding: '0.75rem 1rem' }}>Token</th>
-                  <th style={{ padding: '0.75rem 1rem' }}>Patient Name</th>
-                  <th style={{ padding: '0.75rem 1rem' }}>Department</th>
-                  <th style={{ padding: '0.75rem 1rem' }}>Status</th>
-                  <th style={{ padding: '0.75rem 1rem' }}>Action</th>
+                <tr style={{ background: 'var(--bg-subtle)', color: 'var(--text-secondary)', borderBottom: '2px solid var(--border-color)' }}>
+                  <th style={{ padding: '0.85rem 1.25rem' }}>Token</th>
+                  <th style={{ padding: '0.85rem 1.25rem' }}>Patient Name</th>
+                  <th style={{ padding: '0.85rem 1.25rem' }}>Department</th>
+                  <th style={{ padding: '0.85rem 1.25rem' }}>Status</th>
+                  <th style={{ padding: '0.85rem 1.25rem' }}>Action</th>
                 </tr>
               </thead>
               <tbody>
                 {queueList.map((row) => (
-                  <tr key={row.token} style={{ borderBottom: '1px solid var(--slate-200)', background: row.token === nowServing ? 'var(--emerald-50)' : 'transparent' }}>
-                    <td style={{ padding: '0.85rem 1rem' }}>
-                      <strong style={{ fontSize: '1.1rem', color: 'var(--primary-800)' }}>{row.token}</strong>
+                  <tr key={row.token} style={{ borderBottom: '1px solid var(--border-color)', background: row.token === nowServing ? 'var(--teal-50)' : 'transparent' }}>
+                    <td style={{ padding: '0.9rem 1.25rem' }}>
+                      <strong style={{ fontSize: '1.15rem', color: 'var(--primary-900)' }}>{row.token}</strong>
                     </td>
-                    <td style={{ padding: '0.85rem 1rem', fontWeight: 600 }}>
+                    <td style={{ padding: '0.9rem 1.25rem', fontWeight: 700, color: 'var(--primary-900)' }}>
                       {row.name}
                     </td>
-                    <td style={{ padding: '0.85rem 1rem', color: 'var(--slate-600)' }}>
+                    <td style={{ padding: '0.9rem 1.25rem', color: 'var(--text-secondary)' }}>
                       {row.dept}
                     </td>
-                    <td style={{ padding: '0.85rem 1rem' }}>
+                    <td style={{ padding: '0.9rem 1.25rem' }}>
                       <span
                         style={{
-                          fontSize: '0.75rem',
-                          fontWeight: 700,
-                          padding: '0.2rem 0.6rem',
-                          borderRadius: 'var(--radius-sm)',
-                          background: row.token === nowServing ? 'var(--emerald-100)' : 'var(--slate-200)',
-                          color: row.token === nowServing ? 'var(--emerald-900)' : 'var(--slate-700)',
+                          fontSize: '0.76rem',
+                          fontWeight: 800,
+                          padding: '0.25rem 0.65rem',
+                          borderRadius: 'var(--radius-xs)',
+                          background: row.token === nowServing ? 'var(--emerald-50)' : 'var(--bg-subtle)',
+                          color: row.token === nowServing ? 'var(--emerald-800)' : 'var(--text-secondary)',
+                          border: `1px solid ${row.token === nowServing ? '#b7e6d0' : 'var(--border-color)'}`,
+                          textTransform: 'uppercase',
+                          letterSpacing: '0.03em',
                         }}
                       >
                         {row.status}
                       </span>
                     </td>
-                    <td style={{ padding: '0.85rem 1rem' }}>
+                    <td style={{ padding: '0.9rem 1.25rem' }}>
                       <Link
                         href={`/doctor/consult/${HERO.appointment.id}`}
                         className="btn btn-secondary"
-                        style={{ minHeight: 32, padding: '0.2rem 0.6rem', fontSize: '0.75rem' }}
+                        style={{ minHeight: 34, padding: '0.25rem 0.75rem', fontSize: '0.8rem' }}
                       >
                         Examine ➔
                       </Link>

@@ -36,20 +36,20 @@ export default function AdminAnalyticsPage() {
 
         {/* 5 Core KPI Tiles */}
         <div className="kpi-grid">
-          <div className="kpi-card" data-testid="kpi-footfall">
+          <div className="kpi-card kpi-navy" data-testid="kpi-footfall">
             <span className="kpi-label">Today's Total Footfall</span>
             <p className="kpi-val">{totalFootfall}</p>
-            <span style={{ fontSize: '0.75rem', color: 'var(--emerald-800)', fontWeight: 600 }}>
+            <span style={{ fontSize: '0.76rem', color: 'var(--emerald-800)', fontWeight: 700 }}>
               ↑ 8.4% vs last week
             </span>
           </div>
 
           <div className="kpi-card" data-testid="kpi-avg-wait">
             <span className="kpi-label">Avg OPD Wait Time</span>
-            <p className="kpi-val" style={{ color: avgWait > 30 ? 'var(--amber-900)' : 'var(--slate-900)' }}>
+            <p className="kpi-val" style={{ color: avgWait > 30 ? 'var(--amber-900)' : 'var(--primary-900)' }}>
               {avgWait}m
             </p>
-            <span style={{ fontSize: '0.75rem', color: 'var(--emerald-800)', fontWeight: 600 }}>
+            <span style={{ fontSize: '0.76rem', color: 'var(--emerald-800)', fontWeight: 700 }}>
               Target: &lt; 30 mins
             </span>
           </div>
@@ -57,27 +57,27 @@ export default function AdminAnalyticsPage() {
           <div className="kpi-card" data-testid="kpi-no-show">
             <span className="kpi-label">No-Show Rate</span>
             <p className="kpi-val">{Math.round(noShowRate * 100)}%</p>
-            <span style={{ fontSize: '0.75rem', color: 'var(--slate-500)', fontWeight: 600 }}>
+            <span style={{ fontSize: '0.76rem', color: 'var(--text-secondary)', fontWeight: 600 }}>
               SMS reminder active
             </span>
           </div>
 
-          <div className="kpi-card" data-testid="kpi-stockouts">
+          <div className="kpi-card kpi-crimson" data-testid="kpi-stockouts">
             <span className="kpi-label">Active Stockouts</span>
-            <p className="kpi-val" style={{ color: totalStockOuts > 0 ? 'var(--crimson-800)' : 'var(--slate-900)' }}>
+            <p className="kpi-val" style={{ color: totalStockOuts > 0 ? 'var(--crimson-800)' : 'var(--primary-900)' }}>
               {totalStockOuts}
             </p>
-            <span style={{ fontSize: '0.75rem', color: 'var(--crimson-800)', fontWeight: 600 }}>
+            <span style={{ fontSize: '0.76rem', color: 'var(--crimson-800)', fontWeight: 700 }}>
               Action required
             </span>
           </div>
 
-          <div className="kpi-card" data-testid="kpi-open-complaints">
+          <div className="kpi-card kpi-saffron" data-testid="kpi-open-complaints">
             <span className="kpi-label">Open Grievances</span>
-            <p className="kpi-val" style={{ color: openComplaintsCount > 0 ? 'var(--amber-900)' : 'var(--slate-900)' }}>
+            <p className="kpi-val" style={{ color: openComplaintsCount > 0 ? 'var(--amber-900)' : 'var(--primary-900)' }}>
               {openComplaintsCount}
             </p>
-            <span style={{ fontSize: '0.75rem', color: 'var(--amber-900)', fontWeight: 600 }}>
+            <span style={{ fontSize: '0.76rem', color: 'var(--amber-900)', fontWeight: 700 }}>
               Within 48h SLA
             </span>
           </div>

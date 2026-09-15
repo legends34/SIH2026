@@ -31,12 +31,12 @@ export default function MedicalRecordsTimelinePage() {
         </div>
 
         {/* Patient Switcher */}
-        <div className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem' }}>
+        <div className="card" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '1rem', borderLeft: '4px solid var(--saffron-500)' }}>
           <div>
-            <span style={{ fontSize: '0.8rem', color: 'var(--slate-500)', textTransform: 'uppercase', fontWeight: 700 }}>
+            <span style={{ fontSize: '0.8rem', color: 'var(--text-secondary)', textTransform: 'uppercase', fontWeight: 800, letterSpacing: '0.04em' }}>
               Viewing Medical Timeline For:
             </span>
-            <h2 style={{ fontSize: '1.25rem', fontWeight: 800, color: 'var(--slate-900)' }}>
+            <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--primary-900)', marginTop: '0.15rem' }}>
               {activePatient.name}
             </h2>
           </div>
@@ -65,7 +65,7 @@ export default function MedicalRecordsTimelinePage() {
               type="button"
               onClick={() => setFilterType(f)}
               className={`btn ${filterType === f ? 'btn-primary' : 'btn-secondary'}`}
-              style={{ minHeight: 36, padding: '0.3rem 0.8rem', fontSize: '0.8rem', borderRadius: 'var(--radius-full)' }}
+              style={{ minHeight: 36, padding: '0.35rem 0.9rem', fontSize: '0.82rem', borderRadius: 'var(--radius-full)' }}
             >
               {f === 'all' ? 'All Records' : f === 'consultation' ? '🩺 Consultations' : f === 'prescription' ? '💊 Prescriptions' : f === 'lab_report' ? '🔬 Lab Reports' : '💉 Vaccinations'}
             </button>
@@ -87,24 +87,24 @@ export default function MedicalRecordsTimelinePage() {
                 key={rec.id}
                 className="card"
                 data-testid="record-entry"
-                style={{ borderLeft: `5px solid ${rec.type === 'consultation' ? 'var(--primary-700)' : rec.type === 'prescription' ? '#d81b60' : rec.type === 'lab_report' ? 'var(--emerald-600)' : '#8e24aa'}` }}
+                style={{ borderLeft: `5px solid ${rec.type === 'consultation' ? 'var(--primary-900)' : rec.type === 'prescription' ? 'var(--saffron-500)' : rec.type === 'lab_report' ? 'var(--teal-600)' : '#7c3aed'}` }}
               >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', flexWrap: 'wrap', gap: '0.5rem' }}>
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
-                    <span style={{ fontSize: '1.4rem' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <span style={{ fontSize: '1.5rem' }}>
                       {rec.type === 'consultation' ? '🩺' : rec.type === 'prescription' ? '💊' : rec.type === 'lab_report' ? '🔬' : '💉'}
                     </span>
                     <div>
-                      <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: 'var(--slate-900)' }}>
+                      <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: 'var(--primary-900)' }}>
                         {rec.type === 'consultation' ? 'Doctor Consultation' : rec.type === 'prescription' ? 'Medicine Prescription' : rec.type === 'lab_report' ? 'Diagnostic Lab Report' : 'Immunization Record'}
                       </h3>
-                      <span style={{ fontSize: '0.8rem', color: 'var(--slate-500)' }}>
+                      <span style={{ fontSize: '0.82rem', color: 'var(--text-secondary)' }}>
                         {dateStr} · {fac?.name || 'Primary Health Centre'}
                       </span>
                     </div>
                   </div>
 
-                  <span style={{ fontSize: '0.75rem', fontWeight: 700, padding: '0.2rem 0.5rem', background: 'var(--slate-100)', borderRadius: 'var(--radius-sm)', textTransform: 'uppercase' }}>
+                  <span style={{ fontSize: '0.75rem', fontWeight: 800, padding: '0.25rem 0.6rem', background: 'var(--bg-subtle)', borderRadius: 'var(--radius-xs)', color: 'var(--primary-900)', textTransform: 'uppercase', letterSpacing: '0.03em' }}>
                     {rec.type === 'consultation' ? 'Consultation' : rec.type === 'prescription' ? 'Prescription' : rec.type === 'lab_report' ? 'Lab Report' : 'Vaccination'}
                   </span>
                 </div>

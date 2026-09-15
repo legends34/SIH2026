@@ -81,20 +81,20 @@ function MedicinesSearchInner() {
 
       {/* Medicine Overview */}
       {selectedMed && (
-        <div className="card" style={{ background: 'var(--primary-50)', border: '1px solid var(--primary-200)' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap' }}>
+        <div className="card" style={{ background: 'var(--teal-50)', border: '1px solid var(--teal-100)' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}>
             <div>
-              <span style={{ fontSize: '0.75rem', fontWeight: 700, color: 'var(--primary-800)', textTransform: 'uppercase' }}>
+              <span style={{ fontSize: '0.75rem', fontWeight: 800, color: 'var(--teal-800)', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                 National List of Essential Medicines (NLEM)
               </span>
-              <h2 style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--primary-900)' }}>
+              <h2 style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--primary-900)', marginTop: '0.15rem' }}>
                 {selectedMed.genericName} {selectedMed.strength}
               </h2>
-              <p style={{ fontSize: '0.85rem', color: 'var(--slate-600)' }}>
+              <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)' }}>
                 {selectedMed.dosageForm} · Category: {selectedMed.therapeuticCategory}
               </p>
             </div>
-            <span style={{ fontSize: '0.8rem', fontWeight: 700, padding: '0.3rem 0.6rem', background: 'var(--white)', borderRadius: 'var(--radius-sm)', color: 'var(--primary-800)' }}>
+            <span style={{ fontSize: '0.8rem', fontWeight: 800, padding: '0.35rem 0.75rem', background: 'var(--bg-surface)', borderRadius: 'var(--radius-xs)', color: 'var(--primary-900)', border: '1px solid var(--border-color)' }}>
               NLEM Level: {selectedMed.nlemLevel}
             </span>
           </div>
@@ -103,7 +103,7 @@ function MedicinesSearchInner() {
 
       {/* Stock at Nearby Government Facilities */}
       <div style={{ marginTop: '1.5rem' }}>
-        <h3 style={{ fontSize: '1.15rem', fontWeight: 800, marginBottom: '0.75rem', color: 'var(--slate-900)' }}>
+        <h3 style={{ fontSize: '1.2rem', fontWeight: 800, marginBottom: '0.85rem', color: 'var(--primary-900)' }}>
           Availability at Nearby Government Facilities
         </h3>
 
@@ -114,16 +114,16 @@ function MedicinesSearchInner() {
               className="card"
               data-testid={`medicine-result-${facility.id}`}
               data-stock-status={status}
-              style={{ padding: '1rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}
+              style={{ padding: '1.1rem 1.25rem', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: '0.75rem' }}
             >
               <div>
-                <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-                  <strong style={{ fontSize: '1.05rem', color: 'var(--slate-900)' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}>
+                  <strong style={{ fontSize: '1.1rem', color: 'var(--primary-900)' }}>
                     {facility.name}
                   </strong>
                   <FacilityTierBadge tier={facility.tier} />
                 </div>
-                <p style={{ fontSize: '0.85rem', color: 'var(--slate-600)', marginTop: '0.2rem' }}>
+                <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginTop: '0.25rem' }}>
                   📍 {facility.taluka}, {facility.district} · <strong>{distanceKm} km away</strong>
                 </p>
               </div>
@@ -131,12 +131,12 @@ function MedicinesSearchInner() {
               <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                 <StockIndicator status={status} />
                 {status === 'available' && (
-                  <span style={{ fontSize: '0.8rem', color: 'var(--emerald-800)', fontWeight: 600 }}>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--emerald-800)', fontWeight: 700 }}>
                     ✓ Dispensing Active
                   </span>
                 )}
                 {status === 'out' && (
-                  <span style={{ fontSize: '0.8rem', color: 'var(--crimson-800)', fontWeight: 600 }}>
+                  <span style={{ fontSize: '0.8rem', color: 'var(--crimson-800)', fontWeight: 700 }}>
                     ⚠️ Stockout Reported
                   </span>
                 )}
