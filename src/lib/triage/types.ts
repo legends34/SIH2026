@@ -21,8 +21,7 @@ export type DepartmentCode =
   | 'DERMATOLOGY'
   | 'PSYCHIATRY'
   | 'TOXICOLOGY';
-
-export type FacilityTier = 'SC' | 'PHC' | 'CHC' | 'SDH' | 'DH';
+export type FacilityTier = 'sub_centre' | 'phc' | 'chc' | 'sdh' | 'dh';
 
 export type SymptomId =
   // Cardiovascular & Thoracic

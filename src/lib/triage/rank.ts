@@ -31,20 +31,20 @@ export const RANKING_WEIGHTS: Record<
  * is not directly offered at the facility. Derived from docs/triage/vocabulary.md.
  */
 const STABILIZING_TIERS_BY_DEPARTMENT: Record<DepartmentCode, FacilityTier[]> = {
-  EMERGENCY: ['SC', 'PHC'],
-  GEN_MED: ['SC'],
-  PAEDS: ['SC'],
-  NEONATAL: ['PHC'],
-  OBGYN: ['SC'],
-  SURGERY_GEN: ['PHC'],
-  ORTHO: ['PHC'],
-  CARDIO: ['CHC', 'SDH'],
-  NEURO: ['CHC', 'SDH'],
-  ENT: ['SC'],
-  OPHTHALMOLOGY: ['PHC'],
-  DERMATOLOGY: ['SC'],
-  PSYCHIATRY: ['PHC', 'CHC'],
-  TOXICOLOGY: ['PHC'],
+  EMERGENCY: ['sub_centre', 'phc'],
+  GEN_MED: ['sub_centre'],
+  PAEDS: ['sub_centre'],
+  NEONATAL: ['phc'],
+  OBGYN: ['sub_centre'],
+  SURGERY_GEN: ['phc'],
+  ORTHO: ['phc'],
+  CARDIO: ['chc', 'sdh'],
+  NEURO: ['chc', 'sdh'],
+  ENT: ['sub_centre'],
+  OPHTHALMOLOGY: ['phc'],
+  DERMATOLOGY: ['sub_centre'],
+  PSYCHIATRY: ['phc', 'chc'],
+  TOXICOLOGY: ['phc'],
 };
 
 /** Haversine great-circle distance in kilometres */

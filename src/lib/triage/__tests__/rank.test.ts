@@ -7,7 +7,7 @@ describe('Facility Ranking Suite', () => {
     {
       id: 'fac_sc_01',
       name: 'Pimpri Sub-Centre',
-      tier: 'SC',
+      tier: 'sub_centre',
       latitude: 18.5204,
       longitude: 73.8567, // 0 km from origin
       departments: ['GEN_MED'],
@@ -16,7 +16,7 @@ describe('Facility Ranking Suite', () => {
     {
       id: 'fac_phc_02',
       name: 'Chakan Primary Health Centre',
-      tier: 'PHC',
+      tier: 'phc',
       latitude: 18.65,
       longitude: 73.8567, // ~14.4 km north
       departments: ['GEN_MED', 'PAEDS', 'OBGYN'],
@@ -25,7 +25,7 @@ describe('Facility Ranking Suite', () => {
     {
       id: 'fac_chc_03',
       name: 'Manchar Community Health Centre',
-      tier: 'CHC',
+      tier: 'chc',
       latitude: 18.75,
       longitude: 73.8567, // ~25.5 km north
       departments: ['GEN_MED', 'PAEDS', 'OBGYN', 'EMERGENCY', 'SURGERY_GEN', 'ORTHO'],
@@ -85,7 +85,7 @@ describe('Facility Ranking Suite', () => {
     const incapableClosestSC: Facility = {
       id: 'fac_sc_zero',
       name: 'Zero Capability SC',
-      tier: 'SC',
+      tier: 'sub_centre',
       latitude: 18.5204,
       longitude: 73.8567,
       departments: ['DERMATOLOGY'], // does NOT have EMERGENCY and SC cannot stabilise CARDIO
@@ -95,7 +95,7 @@ describe('Facility Ranking Suite', () => {
     const capableDistantCHC: Facility = {
       id: 'fac_chc_distant',
       name: 'Distant CHC',
-      tier: 'CHC',
+      tier: 'chc',
       latitude: 18.7204,
       longitude: 73.8567, // ~22 km away
       departments: ['EMERGENCY', 'CARDIO'],
@@ -135,7 +135,7 @@ describe('Facility Ranking Suite', () => {
     const fA: Facility = {
       id: 'fac_aaa',
       name: 'Alpha Clinic',
-      tier: 'PHC',
+      tier: 'phc',
       latitude: 18.5,
       longitude: 73.8,
       departments: ['GEN_MED'],
@@ -144,7 +144,7 @@ describe('Facility Ranking Suite', () => {
     const fB: Facility = {
       id: 'fac_bbb',
       name: 'Beta Clinic',
-      tier: 'PHC',
+      tier: 'phc',
       latitude: 18.5,
       longitude: 73.8, // identical location and stats
       departments: ['GEN_MED'],

@@ -3,7 +3,8 @@
 export const LOCALES = ['en', 'hi', 'mr'] as const;
 export type Locale = (typeof LOCALES)[number];
 
-export const DEFAULT_LOCALE: Locale = 'mr'; // Marathi is P0 for Beed demo
+export const DEFAULT_LOCALE: Locale = 'hi'; // Hindi is default demo language for Delhi/NCR demo
+
 
 /** BCP-47 tags for <html lang="..."> */
 export const HTML_LANG: Record<Locale, string> = {

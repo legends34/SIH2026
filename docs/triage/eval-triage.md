@@ -1,6 +1,6 @@
 # Triage Evaluation & Safety Audit Report
 
-**Date:** 2026-09-15T14:18:10.381Z  
+**Date:** 2026-09-15T14:27:57.172Z  
 **Evaluation Pipeline:** Lane C Deterministic Triage Engine  
 **Total Fixtures Evaluated:** 46 cases across 3 datasets  
 

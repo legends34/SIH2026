@@ -5,14 +5,10 @@
  *
  * Lane B owns: entity types (Patient, User, Facility, Slot, Appointment, etc.)
  * Lane C owns: triage vocabulary and engine types (re-exported below from ./lib/triage/types)
- *
- * KNOWN BLOCKER (cross-lane-issues.md #6):
- *   - DepartmentCode: Lane B mock data uses 'general_opd'/'paediatrics' style codes
- *     while Lane C triage engine uses 'GEN_MED'/'PAEDS'. DepartmentCode is kept as
- *     `string` here for compatibility. A team decision is required before Lane A UI
- *     can display consistent department labels. See docs/qa/cross-lane-issues.md #6.
- *   - FacilityTier: Lane B mock data uses lowercase ('phc','chc','dh') while Lane C
- *     uses uppercase ('PHC','CHC','DH'). Both sets are defined below. See issue #6.
+ * Canonical Project Decisions:
+ *   - Demo Geography: Delhi/NCR (Gurugram hero story and reference data)
+ *   - Default Demo Language: Hindi ('hi')
+ *   - FacilityTier: Canonical Lane B values ('sub_centre', 'phc', 'chc', 'sdh', 'dh') standardized across Lanes B and C.
  */
 
 // ─────────────────────────────────────────────
