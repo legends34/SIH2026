@@ -1,0 +1,105 @@
+diff --git a/src/lib/triage/__tests__/engine.test.ts b/src/lib/triage/__tests__/engine.test.ts
+index 47ca420..f3fa3c4 100644
+--- a/src/lib/triage/__tests__/engine.test.ts
++++ b/src/lib/triage/__tests__/engine.test.ts
+@@ -5,7 +5,7 @@ import { triage, ALLOWED_TRIAGE_RESULT_KEYS } from '../triage';
+ import { evaluateRedFlags, RED_FLAG_RULES } from '../redFlags';
+ import { extractSymptoms } from '../extract';
+ import { EVAL_CASES } from '../__fixtures__/eval-cases';
+-import type { SymptomId } from '../types';
++import type { SymptomId, TriageModifiers } from '../types';
+ 
+ describe('Triage Engine Core Suite', () => {
+   it('100% of eval cases whose expected urgency is "emergency" pass', () => {
+diff --git a/src/lib/triage/eval/run.ts b/src/lib/triage/eval/run.ts
+index addef7a..e151077 100644
+--- a/src/lib/triage/eval/run.ts
++++ b/src/lib/triage/eval/run.ts
+@@ -4,7 +4,10 @@ import { triage } from '../triage';
+ import { EVAL_CASES } from '../__fixtures__/eval-cases';
+ import { HOLDOUT_CASES } from '../__fixtures__/holdout-cases';
+ import { RED_TEAM_CASES } from '../__fixtures__/red-team-cases';
+-import type { EvalCase } from '../__fixtures__/eval-cases';
++import { fileURLToPath } from 'url';
++
++const __filename = fileURLToPath(import.meta.url);
++const __dirname = path.dirname(__filename);
+ 
+ interface CaseResult {
+   id: string;
+@@ -143,6 +146,7 @@ export function runEvaluation() {
+   return { emergencyRecall, nonEmergencyDeptAcc, overallUrgencyAcc };
+ }
+ 
+-if (typeof require !== 'undefined' && require.main === module) {
+-  runEvaluation();
+-}
++// This file is an ESM module (package.json has "type": "module"), so there's no
++// CommonJS `require`/`module` to check against — it only ever runs via
++// `npm run eval:triage`, so we just call it directly.
++runEvaluation();
+diff --git a/src/lib/triage/lexicon/mr.ts b/src/lib/triage/lexicon/mr.ts
+index 85d49df..2ce1b7e 100644
+--- a/src/lib/triage/lexicon/mr.ts
++++ b/src/lib/triage/lexicon/mr.ts
+@@ -380,6 +380,7 @@ export const MR_LEXICON: Record<SymptomId, readonly string[]> = {
+     'योनीतून दुर्गंधीयुक्त स्राव येतोय',
+     'अंगावरून घाणेरडा वास येणारे पाणी जाणे',
+     'durghandhiyukt srav yene',
++    'angavarun vaas yenara paani jaatoy',
+   ],
+ 
+   // Paediatric & Neonatal Danger Signs
+@@ -454,6 +455,7 @@ export const MR_LEXICON: Record<SymptomId, readonly string[]> = {
+     'तापासोबत अंगावर जांभळे लाल डाग उठले',
+     'तापात त्वचेवर न मिटणारे काळे डाग',
+     'tapasobat angavar lal jambhle daag',
++    'angavar tapasobat lal chatte disat aahet',
+   ],
+   severe_allergic_reaction: [
+     'चेहरा ओठ सुजले आणि धाप लागतेय',
+@@ -495,6 +497,7 @@ export const MR_LEXICON: Record<SymptomId, readonly string[]> = {
+     'डोळा लाल झालाय पाणी आणि चिकटा येतोय',
+     'डोळ्यात तीव्र आग आणि खुपणे',
+     'dola lal zala ahe aag hone',
++    'dolyat dukhtay ani lal disatoy',
+   ],
+   ear_discharge: [
+     'कानातून पू वाहतोय',
+diff --git a/src/lib/triage/normalize.ts b/src/lib/triage/normalize.ts
+index 620fa19..e300515 100644
+--- a/src/lib/triage/normalize.ts
++++ b/src/lib/triage/normalize.ts
+@@ -20,8 +20,11 @@ export function normalizeText(text: string): string {
+ 
+   // 4. Preserve clause delimiters (.,;:!? and Devanagari Danda \u0964 \u0965),
+   // but replace other non-word/non-alphanumeric punctuation with spaces.
+-  // Allow Devanagari Unicode range \u0900-\u097F and Latin alphanumeric \w
+-  normalized = normalized.replace(/[^\w\s.,;:!?\u0900-\u097F\u0964\u0965]/g, ' ');
++  // Uses Unicode property escapes (\p{L} letters, \p{N} numbers, \p{M} combining
++  // marks — needed so Devanagari matras/virama aren't stripped) instead of a
++  // hardcoded script range, so it works correctly for any script, not just
++  // Devanagari + ASCII. Requires the 'u' (unicode) regex flag.
++  normalized = normalized.replace(/[^\p{L}\p{N}\p{M}_\s.,;:!?\u0964\u0965]/gu, ' ');
+ 
+   // 5. Normalise danda and double danda to periods for uniform clause boundary handling
+   normalized = normalized.replace(/[\u0964\u0965]/g, ' . ');
+diff --git a/tsconfig.node.json b/tsconfig.node.json
+index b7843ea..8b9376b 100644
+--- a/tsconfig.node.json
++++ b/tsconfig.node.json
+@@ -4,13 +4,13 @@
+     "lib": ["ES2023"],
+     "module": "ESNext",
+     "skipLibCheck": true,
++    "composite": true,
+ 
+     /* Bundler mode */
+     "moduleResolution": "bundler",
+     "allowImportingTsExtensions": true,
+     "isolatedModules": true,
+     "moduleDetection": "force",
+-    "noEmit": true,
+ 
+     /* Linting */
+     "strict": true,

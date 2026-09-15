@@ -4,7 +4,10 @@ import { triage } from '../triage';
 import { EVAL_CASES } from '../__fixtures__/eval-cases';
 import { HOLDOUT_CASES } from '../__fixtures__/holdout-cases';
 import { RED_TEAM_CASES } from '../__fixtures__/red-team-cases';
-import type { EvalCase } from '../__fixtures__/eval-cases';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 interface CaseResult {
   id: string;
@@ -143,6 +146,7 @@ export function runEvaluation() {
   return { emergencyRecall, nonEmergencyDeptAcc, overallUrgencyAcc };
 }
 
-if (typeof require !== 'undefined' && require.main === module) {
-  runEvaluation();
-}
+// This file is an ESM module (package.json has "type": "module"), so there's no
+// CommonJS `require`/`module` to check against — it only ever runs via
+// `npm run eval:triage`, so we just call it directly.
+runEvaluation();

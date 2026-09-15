@@ -5,7 +5,7 @@ import { triage, ALLOWED_TRIAGE_RESULT_KEYS } from '../triage';
 import { evaluateRedFlags, RED_FLAG_RULES } from '../redFlags';
 import { extractSymptoms } from '../extract';
 import { EVAL_CASES } from '../__fixtures__/eval-cases';
-import type { SymptomId } from '../types';
+import type { SymptomId, TriageModifiers } from '../types';
 
 describe('Triage Engine Core Suite', () => {
   it('100% of eval cases whose expected urgency is "emergency" pass', () => {
@@ -49,7 +49,7 @@ describe('Triage Engine Core Suite', () => {
       const result = triage({ freeText: text, language: lang });
       expect(
         result.matchedSymptomIds.includes('high_fever') ||
-          result.matchedSymptomIds.includes('child_fever')
+        result.matchedSymptomIds.includes('child_fever')
       ).toBe(false);
     }
   });

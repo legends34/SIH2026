@@ -380,6 +380,7 @@ export const MR_LEXICON: Record<SymptomId, readonly string[]> = {
     'योनीतून दुर्गंधीयुक्त स्राव येतोय',
     'अंगावरून घाणेरडा वास येणारे पाणी जाणे',
     'durghandhiyukt srav yene',
+    'angavarun vaas yenara paani jaatoy',
   ],
 
   // Paediatric & Neonatal Danger Signs
@@ -454,6 +455,7 @@ export const MR_LEXICON: Record<SymptomId, readonly string[]> = {
     'तापासोबत अंगावर जांभळे लाल डाग उठले',
     'तापात त्वचेवर न मिटणारे काळे डाग',
     'tapasobat angavar lal jambhle daag',
+    'angavar tapasobat lal chatte disat aahet',
   ],
   severe_allergic_reaction: [
     'चेहरा ओठ सुजले आणि धाप लागतेय',
@@ -495,6 +497,7 @@ export const MR_LEXICON: Record<SymptomId, readonly string[]> = {
     'डोळा लाल झालाय पाणी आणि चिकटा येतोय',
     'डोळ्यात तीव्र आग आणि खुपणे',
     'dola lal zala ahe aag hone',
+    'dolyat dukhtay ani lal disatoy',
   ],
   ear_discharge: [
     'कानातून पू वाहतोय',

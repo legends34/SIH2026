@@ -20,8 +20,11 @@ export function normalizeText(text: string): string {
 
   // 4. Preserve clause delimiters (.,;:!? and Devanagari Danda \u0964 \u0965),
   // but replace other non-word/non-alphanumeric punctuation with spaces.
-  // Allow Devanagari Unicode range \u0900-\u097F and Latin alphanumeric \w
-  normalized = normalized.replace(/[^\w\s.,;:!?\u0900-\u097F\u0964\u0965]/g, ' ');
+  // Uses Unicode property escapes (\p{L} letters, \p{N} numbers, \p{M} combining
+  // marks — needed so Devanagari matras/virama aren't stripped) instead of a
+  // hardcoded script range, so it works correctly for any script, not just
+  // Devanagari + ASCII. Requires the 'u' (unicode) regex flag.
+  normalized = normalized.replace(/[^\p{L}\p{N}\p{M}_\s.,;:!?\u0964\u0965]/gu, ' ');
 
   // 5. Normalise danda and double danda to periods for uniform clause boundary handling
   normalized = normalized.replace(/[\u0964\u0965]/g, ' . ');
