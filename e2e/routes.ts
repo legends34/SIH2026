@@ -34,47 +34,47 @@ export interface RouteSpec {
 
 export const ROUTES: readonly RouteSpec[] = [
   // ── Scaffold ────────────────────────────────────────────────────────────────
-  { key: 'root', path: '/', screen: 'Root (redirects to language select)', role: null, demoStep: null, priority: 'P0', status: 'placeholder' },
+  { key: 'root', path: '/', screen: 'Root (redirects to language select)', role: null, demoStep: null, priority: 'P0', status: 'built' },
 
   // ── Auth ────────────────────────────────────────────────────────────────────
-  { key: 'auth.language', path: '/auth/language', screen: 'Language select', role: null, demoStep: 1, priority: 'P0', status: 'not_built' },
-  { key: 'auth.login', path: '/auth/login', screen: 'Login', role: null, demoStep: 1, priority: 'P0', status: 'not_built' },
-  { key: 'auth.otp', path: '/auth/otp', screen: 'OTP', role: null, demoStep: 1, priority: 'P0', status: 'not_built' },
+  { key: 'auth.language', path: '/auth/language', screen: 'Language select', role: null, demoStep: 1, priority: 'P0', status: 'built' },
+  { key: 'auth.login', path: '/auth/login', screen: 'Login', role: null, demoStep: 1, priority: 'P0', status: 'built' },
+  { key: 'auth.otp', path: '/auth/otp', screen: 'OTP', role: null, demoStep: 1, priority: 'P0', status: 'built' },
 
   // ── Patient ─────────────────────────────────────────────────────────────────
-  { key: 'patient.home', path: '/patient', screen: 'Patient home', role: 'CITIZEN', demoStep: 2, priority: 'P0', status: 'not_built' },
-  { key: 'patient.triage', path: '/patient/triage', screen: 'Triage input', role: 'CITIZEN', demoStep: 3, priority: 'P0', status: 'not_built' },
-  { key: 'patient.triageResult', path: '/patient/triage/result', screen: 'Triage result + emergency overlay', role: 'CITIZEN', demoStep: 4, priority: 'P0', status: 'not_built' },
-  { key: 'patient.facilities', path: '/patient/facilities', screen: 'Facility list', role: 'CITIZEN', demoStep: 5, priority: 'P0', status: 'not_built' },
-  { key: 'patient.facilityDetail', path: `/patient/facilities/${HERO.phcId}`, screen: 'Facility detail', role: 'CITIZEN', demoStep: 5, priority: 'P0', status: 'not_built' },
-  { key: 'patient.book', path: `/patient/book/${HERO.phcId}`, screen: 'Booking wizard', role: 'CITIZEN', demoStep: 6, priority: 'P0', status: 'not_built' },
-  { key: 'patient.appointment', path: `/patient/appointments/${HERO.appointment.id}`, screen: 'Token receipt', role: 'CITIZEN', demoStep: 6, priority: 'P0', status: 'not_built' },
-  { key: 'patient.queue', path: `/patient/queue/${HERO.phcId}`, screen: 'Live queue', role: 'CITIZEN', demoStep: 7, priority: 'P0', status: 'not_built' },
-  { key: 'patient.records', path: '/patient/records', screen: 'Records timeline', role: 'CITIZEN', demoStep: 10, priority: 'P0', status: 'not_built' },
-  { key: 'patient.medicines', path: '/patient/medicines', screen: 'Medicine search', role: 'CITIZEN', demoStep: 11, priority: 'P0', status: 'not_built' },
-  { key: 'patient.complaintNew', path: '/patient/complaints/new', screen: 'File complaint', role: 'CITIZEN', demoStep: 13, priority: 'P0', status: 'not_built' },
-  { key: 'patient.complaintPreview', path: '/patient/complaints/new/preview', screen: 'Complaint preview', role: 'CITIZEN', demoStep: 13, priority: 'P0', status: 'not_built' },
-  { key: 'patient.complaintTrack', path: `/patient/complaints/${HERO.complaint.id}`, screen: 'Complaint tracker', role: 'CITIZEN', demoStep: 13, priority: 'P0', status: 'not_built' },
-  { key: 'patient.profile', path: '/patient/profile', screen: 'Profile + ABHA link stub', role: 'CITIZEN', demoStep: null, priority: 'P0', status: 'not_built' },
+  { key: 'patient.home', path: '/patient', screen: 'Patient home', role: 'CITIZEN', demoStep: 2, priority: 'P0', status: 'built' },
+  { key: 'patient.triage', path: '/patient/triage', screen: 'Triage input', role: 'CITIZEN', demoStep: 3, priority: 'P0', status: 'built' },
+  { key: 'patient.triageResult', path: '/patient/triage/result', screen: 'Triage result + emergency overlay', role: 'CITIZEN', demoStep: 4, priority: 'P0', status: 'built' },
+  { key: 'patient.facilities', path: '/patient/facilities', screen: 'Facility list', role: 'CITIZEN', demoStep: 5, priority: 'P0', status: 'built' },
+  { key: 'patient.facilityDetail', path: `/patient/facilities/${HERO.phcId}`, screen: 'Facility detail', role: 'CITIZEN', demoStep: 5, priority: 'P0', status: 'built' },
+  { key: 'patient.book', path: `/patient/book/${HERO.phcId}`, screen: 'Booking wizard', role: 'CITIZEN', demoStep: 6, priority: 'P0', status: 'built' },
+  { key: 'patient.appointment', path: `/patient/appointments/${HERO.appointment.id}`, screen: 'Token receipt', role: 'CITIZEN', demoStep: 6, priority: 'P0', status: 'built' },
+  { key: 'patient.queue', path: `/patient/queue/${HERO.phcId}`, screen: 'Live queue', role: 'CITIZEN', demoStep: 7, priority: 'P0', status: 'built' },
+  { key: 'patient.records', path: '/patient/records', screen: 'Records timeline', role: 'CITIZEN', demoStep: 10, priority: 'P0', status: 'built' },
+  { key: 'patient.medicines', path: '/patient/medicines', screen: 'Medicine search', role: 'CITIZEN', demoStep: 11, priority: 'P0', status: 'built' },
+  { key: 'patient.complaintNew', path: '/patient/complaints/new', screen: 'File complaint', role: 'CITIZEN', demoStep: 13, priority: 'P0', status: 'built' },
+  { key: 'patient.complaintPreview', path: '/patient/complaints/new/preview', screen: 'Complaint preview', role: 'CITIZEN', demoStep: 13, priority: 'P0', status: 'built' },
+  { key: 'patient.complaintTrack', path: `/patient/complaints/${HERO.complaint.id}`, screen: 'Complaint tracker', role: 'CITIZEN', demoStep: 13, priority: 'P0', status: 'built' },
+  { key: 'patient.profile', path: '/patient/profile', screen: 'Profile + ABHA link stub', role: 'CITIZEN', demoStep: null, priority: 'P0', status: 'built' },
 
   // ── Doctor ──────────────────────────────────────────────────────────────────
-  { key: 'doctor.opd', path: '/doctor', screen: 'OPD queue', role: 'DOCTOR', demoStep: 8, priority: 'P0', status: 'not_built' },
-  { key: 'doctor.consult', path: `/doctor/consult/${HERO.appointment.id}`, screen: 'Consultation + prescription', role: 'DOCTOR', demoStep: 9, priority: 'P0', status: 'not_built' },
+  { key: 'doctor.opd', path: '/doctor', screen: 'OPD queue', role: 'DOCTOR', demoStep: 8, priority: 'P0', status: 'built' },
+  { key: 'doctor.consult', path: `/doctor/consult/${HERO.appointment.id}`, screen: 'Consultation + prescription', role: 'DOCTOR', demoStep: 9, priority: 'P0', status: 'built' },
 
   // ── Pharmacist ──────────────────────────────────────────────────────────────
-  { key: 'pharmacist.inventory', path: '/pharmacist', screen: 'Inventory update', role: 'PHARMACIST', demoStep: 12, priority: 'P0', status: 'not_built' },
+  { key: 'pharmacist.inventory', path: '/pharmacist', screen: 'Inventory update', role: 'PHARMACIST', demoStep: 12, priority: 'P0', status: 'built' },
 
   // ── Admin ───────────────────────────────────────────────────────────────────
-  { key: 'admin.analytics', path: '/admin', screen: 'Admin analytics (both tabs)', role: 'DISTRICT_ADMIN', demoStep: 14, priority: 'P0', status: 'not_built' },
+  { key: 'admin.analytics', path: '/admin', screen: 'Admin analytics (both tabs)', role: 'DISTRICT_ADMIN', demoStep: 14, priority: 'P0', status: 'built' },
 
   // ── Deferred (brief §5 "Deferred, and why") ─────────────────────────────────
-  { key: 'patient.teleconsult', path: `/patient/teleconsult/${HERO.appointment.id}`, screen: 'Teleconsult waiting room', role: 'CITIZEN', demoStep: null, priority: 'deferred', status: 'not_built' },
-  { key: 'doctor.teleconsult', path: `/doctor/teleconsult/${HERO.appointment.id}`, screen: 'Teleconsult call', role: 'DOCTOR', demoStep: null, priority: 'deferred', status: 'not_built' },
-  { key: 'patient.diagnostics', path: '/patient/diagnostics', screen: 'Diagnostic order tracking', role: 'CITIZEN', demoStep: null, priority: 'deferred', status: 'not_built' },
-  { key: 'patient.followUp', path: '/patient/follow-up', screen: 'Follow-up check-in', role: 'CITIZEN', demoStep: null, priority: 'deferred', status: 'not_built' },
-  { key: 'doctor.referrals', path: '/doctor/referrals', screen: 'Referrals', role: 'DOCTOR', demoStep: null, priority: 'deferred', status: 'not_built' },
-  { key: 'admin.audit', path: '/admin/audit', screen: 'Audit log', role: 'DISTRICT_ADMIN', demoStep: null, priority: 'deferred', status: 'not_built' },
-  { key: 'admin.users', path: '/admin/users', screen: 'User management', role: 'DISTRICT_ADMIN', demoStep: null, priority: 'deferred', status: 'not_built' },
+  { key: 'patient.teleconsult', path: `/patient/teleconsult/${HERO.appointment.id}`, screen: 'Teleconsult waiting room', role: 'CITIZEN', demoStep: null, priority: 'deferred', status: 'built' },
+  { key: 'doctor.teleconsult', path: `/doctor/teleconsult/${HERO.appointment.id}`, screen: 'Teleconsult call', role: 'DOCTOR', demoStep: null, priority: 'deferred', status: 'built' },
+  { key: 'patient.diagnostics', path: '/patient/diagnostics', screen: 'Diagnostic order tracking', role: 'CITIZEN', demoStep: null, priority: 'deferred', status: 'built' },
+  { key: 'patient.followUp', path: '/patient/follow-up', screen: 'Follow-up check-in', role: 'CITIZEN', demoStep: null, priority: 'deferred', status: 'built' },
+  { key: 'doctor.referrals', path: '/doctor/referrals', screen: 'Referrals', role: 'DOCTOR', demoStep: null, priority: 'deferred', status: 'built' },
+  { key: 'admin.audit', path: '/admin/audit', screen: 'Audit log', role: 'DISTRICT_ADMIN', demoStep: null, priority: 'deferred', status: 'built' },
+  { key: 'admin.users', path: '/admin/users', screen: 'User management', role: 'DISTRICT_ADMIN', demoStep: null, priority: 'deferred', status: 'built' },
 ] as const;
 
 export function route(key: string): RouteSpec {
