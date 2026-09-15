@@ -1,0 +1,3574 @@
+openapi: 3.1.0
+info:
+  title: Swasthya Healthcare API Contract
+  version: 1.0.0
+  description: Production REST API specification for Swasthya public health platform
+    (SIH26133). Fully typed against Lane B contracts.
+  license:
+    name: Proprietary / Government of India SIH-2026
+    url: https://www.sih.gov.in/
+servers:
+- url: https://api.swasthya.gov.in/v1
+  description: Production Gateway
+- url: https://staging.swasthya.gov.in/v1
+  description: Staging Sandbox
+security:
+- bearerAuth: []
+paths:
+  /auth/otp/request:
+    post:
+      summary: Request OTP for phone number
+      operationId: requestOtp
+      x-roles:
+      - PUBLIC
+      x-facility-scoped: false
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OtpRequestResponse'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OtpRequestInput'
+  /auth/otp/verify:
+    post:
+      summary: Verify OTP and obtain JWT
+      operationId: verifyOtp
+      x-roles:
+      - PUBLIC
+      x-facility-scoped: false
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthSessionResponse'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OtpVerifyInput'
+  /auth/me:
+    get:
+      summary: Get currently authenticated user
+      operationId: getCurrentUser
+      x-roles:
+      - ALL_AUTHENTICATED
+      x-facility-scoped: false
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters: []
+  /auth/abha/link:
+    post:
+      summary: Link ABHA ID using ABDM gateway
+      operationId: linkAbha
+      x-roles:
+      - CITIZEN
+      x-facility-scoped: false
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AbhaLinkResponse'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AbhaLinkInput'
+  /auth/logout:
+    post:
+      summary: Invalidate session
+      operationId: logoutUser
+      x-roles:
+      - ALL_AUTHENTICATED
+      x-facility-scoped: false
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters: []
+  /patients:
+    get:
+      summary: List family members managed by user
+      operationId: listPatients
+      x-roles:
+      - CITIZEN
+      x-facility-scoped: false
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Patient'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters: []
+    post:
+      summary: Add new patient profile
+      operationId: createPatient
+      x-roles:
+      - CITIZEN
+      x-facility-scoped: false
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePatientInput'
+  /patients/{id}:
+    get:
+      summary: Get patient by ID
+      operationId: getPatient
+      x-roles:
+      - CITIZEN
+      - DOCTOR
+      x-facility-scoped: false
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+    put:
+      summary: Update patient profile
+      operationId: updatePatient
+      x-roles:
+      - CITIZEN
+      x-facility-scoped: false
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Patient'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePatientInput'
+  /facilities:
+    get:
+      summary: Directory of health facilities
+      operationId: listFacilities
+      x-roles:
+      - PUBLIC
+      - ALL_AUTHENTICATED
+      x-facility-scoped: false
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Facility'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: district
+        in: query
+        schema:
+          type: string
+      - name: tier
+        in: query
+        schema:
+          type: string
+      - name: radiusKm
+        in: query
+        schema:
+          type: number
+  /facilities/{id}:
+    get:
+      summary: Get facility details
+      operationId: getFacility
+      x-roles:
+      - PUBLIC
+      - ALL_AUTHENTICATED
+      x-facility-scoped: false
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Facility'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  /facilities/{facilityId}/slots:
+    get:
+      summary: List available slots for facility
+      operationId: listSlots
+      x-roles:
+      - ALL_AUTHENTICATED
+      x-facility-scoped: false
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Slot'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: facilityId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: departmentCode
+        in: query
+        required: true
+        schema:
+          type: string
+      - name: date
+        in: query
+        required: true
+        schema:
+          type: string
+          format: date
+  /appointments:
+    post:
+      summary: Book appointment slot
+      operationId: bookAppointment
+      x-roles:
+      - CITIZEN
+      - FACILITY_ADMIN
+      x-facility-scoped: false
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Unique client UUID preventing duplicate execution of mutating
+          operations.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BookAppointmentInput'
+  /appointments/{id}:
+    get:
+      summary: Get appointment by ID
+      operationId: getAppointment
+      x-roles:
+      - CITIZEN
+      - DOCTOR
+      - FACILITY_ADMIN
+      x-facility-scoped: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  /appointments/{id}/check-in:
+    post:
+      summary: Check in patient at facility
+      operationId: checkInAppointment
+      x-roles:
+      - CITIZEN
+      - FACILITY_ADMIN
+      x-facility-scoped: true
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  /appointments/{id}/cancel:
+    post:
+      summary: Cancel appointment
+      operationId: cancelAppointment
+      x-roles:
+      - CITIZEN
+      - FACILITY_ADMIN
+      x-facility-scoped: false
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Appointment'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelAppointmentInput'
+  /queues/{facilityId}/{departmentCode}/state:
+    get:
+      summary: Get current queue state
+      operationId: getQueueState
+      x-roles:
+      - ALL_AUTHENTICATED
+      x-facility-scoped: false
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueState'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: facilityId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: departmentCode
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: date
+        in: query
+        schema:
+          type: string
+          format: date
+  /queues/{facilityId}/{departmentCode}/entries:
+    get:
+      summary: Get daily queue entries
+      operationId: listQueueEntries
+      x-roles:
+      - DOCTOR
+      - FACILITY_ADMIN
+      x-facility-scoped: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/QueueEntry'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: facilityId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: departmentCode
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: date
+        in: query
+        schema:
+          type: string
+          format: date
+  /queues/{facilityId}/{departmentCode}/call-next:
+    post:
+      summary: Call next patient in queue
+      operationId: callNextPatient
+      x-roles:
+      - DOCTOR
+      x-facility-scoped: true
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueCallNextResponse'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: facilityId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: departmentCode
+        in: path
+        required: true
+        schema:
+          type: string
+  /queues/{facilityId}/{departmentCode}/skip:
+    post:
+      summary: Hold or skip current patient
+      operationId: skipPatient
+      x-roles:
+      - DOCTOR
+      x-facility-scoped: true
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueState'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: facilityId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: departmentCode
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/QueueSkipInput'
+  /queues/{facilityId}/{departmentCode}/walk-in:
+    post:
+      summary: Register walk-in token
+      operationId: registerWalkIn
+      x-roles:
+      - FACILITY_ADMIN
+      - DOCTOR
+      x-facility-scoped: true
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QueueEntry'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: facilityId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: departmentCode
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterWalkInInput'
+  /triage/evaluate:
+    post:
+      summary: Evaluate symptoms deterministically
+      operationId: evaluateTriage
+      x-roles:
+      - CITIZEN
+      - DOCTOR
+      x-facility-scoped: false
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TriageResult'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TriageInput'
+  /patients/{patientId}/records:
+    get:
+      summary: Get patient medical record timeline
+      operationId: listPatientRecords
+      x-roles:
+      - CITIZEN
+      - DOCTOR
+      x-facility-scoped: false
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HealthRecord'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: patientId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: type
+        in: query
+        schema:
+          type: string
+  /records:
+    post:
+      summary: Create medical encounter record
+      operationId: createMedicalRecord
+      x-roles:
+      - DOCTOR
+      x-facility-scoped: true
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthRecord'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateHealthRecordInput'
+  /records/{id}:
+    get:
+      summary: Get medical record by ID
+      operationId: getMedicalRecord
+      x-roles:
+      - CITIZEN
+      - DOCTOR
+      x-facility-scoped: false
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthRecord'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  /consent/grants:
+    post:
+      summary: Grant clinical consent
+      operationId: grantConsent
+      x-roles:
+      - CITIZEN
+      x-facility-scoped: false
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConsentGrant'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateConsentInput'
+  /consent/grants/{id}/revoke:
+    post:
+      summary: Revoke consent grant
+      operationId: revokeConsent
+      x-roles:
+      - CITIZEN
+      x-facility-scoped: false
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  /records/break-glass:
+    post:
+      summary: Emergency break-glass access
+      operationId: breakGlassAccess
+      x-roles:
+      - DOCTOR
+      x-facility-scoped: true
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BreakGlassSessionResponse'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BreakGlassInput'
+  /prescriptions:
+    post:
+      summary: Issue prescription
+      operationId: createPrescription
+      x-roles:
+      - DOCTOR
+      x-facility-scoped: true
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrescriptionResponse'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePrescriptionInput'
+  /patients/{patientId}/prescriptions:
+    get:
+      summary: List prescriptions for patient
+      operationId: listPrescriptions
+      x-roles:
+      - CITIZEN
+      - DOCTOR
+      - PHARMACIST
+      x-facility-scoped: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PrescriptionResponse'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: patientId
+        in: path
+        required: true
+        schema:
+          type: string
+  /prescriptions/{id}/dispense:
+    post:
+      summary: Dispense prescription medicines
+      operationId: dispensePrescription
+      x-roles:
+      - PHARMACIST
+      x-facility-scoped: true
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DispenseResponse'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DispensePrescriptionInput'
+  /facilities/{facilityId}/stock:
+    get:
+      summary: List facility stock levels
+      operationId: listFacilityStock
+      x-roles:
+      - ALL_AUTHENTICATED
+      x-facility-scoped: false
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/StockItem'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: facilityId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: status
+        in: query
+        schema:
+          type: string
+  /facilities/{facilityId}/stock/adjust:
+    post:
+      summary: Adjust stock balance with ledger
+      operationId: adjustStock
+      x-roles:
+      - PHARMACIST
+      - FACILITY_ADMIN
+      x-facility-scoped: true
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StockItem'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: facilityId
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Unique client UUID preventing duplicate execution of mutating
+          operations.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StockAdjustmentInput'
+  /facilities/{facilityId}/stock/ledger:
+    get:
+      summary: Get audit stock ledger
+      operationId: getStockLedger
+      x-roles:
+      - PHARMACIST
+      - FACILITY_ADMIN
+      x-facility-scoped: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/LedgerEntry'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: facilityId
+        in: path
+        required: true
+        schema:
+          type: string
+  /complaints:
+    post:
+      summary: Submit citizen grievance
+      operationId: createComplaint
+      x-roles:
+      - CITIZEN
+      x-facility-scoped: false
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Complaint'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: Idempotency-Key
+        in: header
+        required: true
+        schema:
+          type: string
+          format: uuid
+        description: Unique client UUID preventing duplicate execution of mutating
+          operations.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateComplaintInput'
+    get:
+      summary: List complaints
+      operationId: listComplaints
+      x-roles:
+      - CITIZEN
+      - FACILITY_ADMIN
+      - DISTRICT_ADMIN
+      x-facility-scoped: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Complaint'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: status
+        in: query
+        schema:
+          type: string
+      - name: facilityId
+        in: query
+        schema:
+          type: string
+  /complaints/{id}:
+    get:
+      summary: Get complaint by ID
+      operationId: getComplaint
+      x-roles:
+      - CITIZEN
+      - FACILITY_ADMIN
+      - DISTRICT_ADMIN
+      x-facility-scoped: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Complaint'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  /complaints/{id}/updates:
+    post:
+      summary: Add timeline update to complaint
+      operationId: updateComplaint
+      x-roles:
+      - FACILITY_ADMIN
+      - DISTRICT_ADMIN
+      x-facility-scoped: true
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Complaint'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ComplaintUpdateInput'
+  /referrals:
+    post:
+      summary: Create clinical referral
+      operationId: createReferral
+      x-roles:
+      - DOCTOR
+      x-facility-scoped: true
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReferralResponse'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateReferralInput'
+  /teleconsult/sessions:
+    post:
+      summary: Create teleconsult session
+      operationId: createTeleconsult
+      x-roles:
+      - DOCTOR
+      - FACILITY_ADMIN
+      x-facility-scoped: true
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateTeleconsultInput'
+  /teleconsult/sessions/{id}/token:
+    post:
+      summary: Get LiveKit WebRTC room token
+      operationId: getTeleconsultToken
+      x-roles:
+      - CITIZEN
+      - DOCTOR
+      x-facility-scoped: false
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LiveKitTokenResponse'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  /teleconsult/sessions/{id}/end:
+    post:
+      summary: End teleconsult session
+      operationId: endTeleconsult
+      x-roles:
+      - DOCTOR
+      x-facility-scoped: false
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  /diagnostics/orders:
+    post:
+      summary: Create diagnostic lab order
+      operationId: createDiagnosticOrder
+      x-roles:
+      - DOCTOR
+      x-facility-scoped: true
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateDiagnosticOrderInput'
+  /diagnostics/orders/{id}/results:
+    post:
+      summary: Submit diagnostic lab result
+      operationId: submitDiagnosticResult
+      x-roles:
+      - DOCTOR
+      x-facility-scoped: true
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubmitDiagnosticResultInput'
+  /follow-ups:
+    post:
+      summary: Create follow-up schedule
+      operationId: createFollowUp
+      x-roles:
+      - DOCTOR
+      x-facility-scoped: true
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateFollowUpInput'
+  /follow-ups/{id}/respond:
+    post:
+      summary: Respond to follow-up reminder
+      operationId: respondFollowUp
+      x-roles:
+      - CITIZEN
+      x-facility-scoped: false
+      responses:
+        '201':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FollowUpResponseInput'
+  /audit/verify:
+    get:
+      summary: Verify audit log cryptographic hash chain
+      operationId: verifyAuditLog
+      x-roles:
+      - STATE_ADMIN
+      - FACILITY_ADMIN
+      x-facility-scoped: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuditChainVerificationResponse'
+        '400':
+          description: Validation or bad request error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '401':
+          description: Unauthorized access
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '403':
+          description: Forbidden - role or facility scope mismatch
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '409':
+          description: Conflict (e.g. SLOT_FULL, CONCURRENT_MODIFICATION)
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorEnvelope'
+      parameters: []
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: JWT containing sub (userId), role, facilityId (for staff), and
+        patientIds (for citizens).
+  schemas:
+    ErrorEnvelope:
+      type: object
+      required:
+      - error
+      properties:
+        error:
+          type: object
+          required:
+          - code
+          - message
+          - correlation_id
+          properties:
+            code:
+              type: string
+              example: SLOT_FULL
+            message:
+              type: string
+              example: The requested OPD slot has reached maximum capacity.
+            details:
+              type: object
+              additionalProperties: true
+            correlation_id:
+              type: string
+              example: req_4f89d31a
+    ApiResponse:
+      type: object
+      required:
+      - success
+      - message
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: Operation completed successfully.
+    User:
+      type: object
+      required:
+      - id
+      - phone
+      - role
+      - registeredAt
+      properties:
+        id:
+          type: string
+          example: usr_sunita_01
+        phone:
+          type: string
+          example: '+919876543210'
+        role:
+          type: string
+          enum:
+          - CITIZEN
+          - DOCTOR
+          - PHARMACIST
+          - FACILITY_ADMIN
+          - DISTRICT_ADMIN
+          - STATE_ADMIN
+        patientIds:
+          type: array
+          items:
+            type: string
+        facilityId:
+          type: string
+          example: fac_gurugram_phc_01
+        departmentCode:
+          type: string
+          example: GEN_MED
+        registeredAt:
+          type: string
+          format: date-time
+    Patient:
+      type: object
+      required:
+      - id
+      - fullName
+      - dateOfBirth
+      - ageYears
+      - sex
+      - preferredLanguage
+      properties:
+        id:
+          type: string
+          example: pat_sunita_01
+        fullName:
+          type: string
+          example: Sunita Devi
+        dateOfBirth:
+          type: string
+          format: date
+        ageYears:
+          type: integer
+          minimum: 0
+          maximum: 130
+        sex:
+          type: string
+          enum:
+          - male
+          - female
+          - other
+        aadhaarLast4:
+          type: string
+          pattern: ^[0-9]{4}$
+        preferredLanguage:
+          type: string
+          example: hi
+    Facility:
+      type: object
+      required:
+      - id
+      - name
+      - tier
+      - district
+      - taluka
+      - pincode
+      - latitude
+      - longitude
+      - departments
+      - verified
+      properties:
+        id:
+          type: string
+          example: fac_gurugram_phc_01
+        name:
+          type: string
+          example: Gurugram Sector 4 PHC
+        tier:
+          type: string
+          enum:
+          - sub_centre
+          - phc
+          - chc
+          - sdh
+          - dh
+        district:
+          type: string
+          example: Gurugram
+        taluka:
+          type: string
+          example: Gurugram
+        pincode:
+          type: string
+          pattern: ^[0-9]{6}$
+        latitude:
+          type: number
+          format: float
+        longitude:
+          type: number
+          format: float
+        departments:
+          type: array
+          items:
+            type: string
+        verified:
+          type: boolean
+    Slot:
+      type: object
+      required:
+      - id
+      - facilityId
+      - departmentCode
+      - date
+      - startTime
+      - endTime
+      - capacity
+      - bookedCount
+      properties:
+        id:
+          type: string
+          example: slot_gurugram_01
+        facilityId:
+          type: string
+        departmentCode:
+          type: string
+        date:
+          type: string
+          format: date
+        startTime:
+          type: string
+          example: 09:00
+        endTime:
+          type: string
+          example: '13:00'
+        capacity:
+          type: integer
+          minimum: 1
+        bookedCount:
+          type: integer
+          minimum: 0
+    Appointment:
+      type: object
+      required:
+      - id
+      - slotId
+      - patientId
+      - facilityId
+      - departmentCode
+      - tokenNumber
+      - status
+      - isWalkIn
+      - bookedAt
+      - updatedAt
+      properties:
+        id:
+          type: string
+          example: appt_01
+        slotId:
+          type: string
+        patientId:
+          type: string
+        facilityId:
+          type: string
+        departmentCode:
+          type: string
+        tokenNumber:
+          type: integer
+          minimum: 1
+        status:
+          type: string
+          enum:
+          - booked
+          - checked_in
+          - in_consultation
+          - completed
+          - cancelled
+          - no_show
+        isWalkIn:
+          type: boolean
+        bookedAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
+    QueueState:
+      type: object
+      required:
+      - facilityId
+      - departmentCode
+      - date
+      - nowServing
+      - lastToken
+      - avgServiceTimeMinutes
+      - updatedAt
+      properties:
+        facilityId:
+          type: string
+        departmentCode:
+          type: string
+        date:
+          type: string
+          format: date
+        nowServing:
+          type: integer
+        lastToken:
+          type: integer
+        avgServiceTimeMinutes:
+          type: number
+        updatedAt:
+          type: string
+          format: date-time
+    QueueEntry:
+      type: object
+      required:
+      - facilityId
+      - departmentCode
+      - date
+      - tokenNumber
+      - patientId
+      properties:
+        facilityId:
+          type: string
+        departmentCode:
+          type: string
+        date:
+          type: string
+          format: date
+        tokenNumber:
+          type: integer
+        patientId:
+          type: string
+        appointmentId:
+          type: string
+        calledAt:
+          type: string
+          format: date-time
+        completedAt:
+          type: string
+          format: date-time
+    HealthRecord:
+      type: object
+      required:
+      - id
+      - patientId
+      - facilityId
+      - authorUserId
+      - type
+      - recordedAt
+      - data
+      properties:
+        id:
+          type: string
+        patientId:
+          type: string
+        facilityId:
+          type: string
+        authorUserId:
+          type: string
+        appointmentId:
+          type: string
+        type:
+          type: string
+          enum:
+          - consultation
+          - prescription
+          - lab_report
+          - vaccination
+        recordedAt:
+          type: string
+          format: date-time
+        data:
+          type: object
+          additionalProperties: true
+    StockItem:
+      type: object
+      required:
+      - medicineId
+      - facilityId
+      - currentQuantity
+      - status
+      - lastUpdatedAt
+      - lastIdempotencyKey
+      properties:
+        medicineId:
+          type: string
+        facilityId:
+          type: string
+        currentQuantity:
+          type: integer
+          minimum: 0
+        status:
+          type: string
+          enum:
+          - available
+          - low
+          - out
+        lastUpdatedAt:
+          type: string
+          format: date-time
+        lastIdempotencyKey:
+          type: string
+    LedgerEntry:
+      type: object
+      required:
+      - id
+      - medicineId
+      - facilityId
+      - eventType
+      - delta
+      - idempotencyKey
+      - recordedAt
+      properties:
+        id:
+          type: string
+        medicineId:
+          type: string
+        facilityId:
+          type: string
+        eventType:
+          type: string
+          enum:
+          - receipt
+          - dispense
+          - adjustment
+          - expiry
+          - transfer
+        delta:
+          type: integer
+        idempotencyKey:
+          type: string
+        recordedAt:
+          type: string
+          format: date-time
+    Complaint:
+      type: object
+      required:
+      - id
+      - patientId
+      - facilityId
+      - category
+      - severity
+      - status
+      - description
+      - slaDueAt
+      - timeline
+      - createdAt
+      properties:
+        id:
+          type: string
+        patientId:
+          type: string
+        facilityId:
+          type: string
+        category:
+          type: string
+        severity:
+          type: string
+          enum:
+          - low
+          - medium
+          - high
+          - critical
+        status:
+          type: string
+          enum:
+          - open
+          - in_review
+          - escalated
+          - resolved
+          - closed
+        description:
+          type: string
+        slaDueAt:
+          type: string
+          format: date
+        timeline:
+          type: array
+          items:
+            type: object
+            required:
+            - status
+            - note
+            - updatedAt
+            - updatedByUserId
+            properties:
+              status:
+                type: string
+              note:
+                type: string
+              updatedAt:
+                type: string
+                format: date-time
+              updatedByUserId:
+                type: string
+        createdAt:
+          type: string
+          format: date-time
+    TriageInput:
+      type: object
+      required:
+      - patientId
+      - ageMonths
+      - sex
+      - symptomIds
+      - language
+      properties:
+        patientId:
+          type: string
+        ageMonths:
+          type: integer
+        sex:
+          type: string
+          enum:
+          - male
+          - female
+          - other
+        pregnant:
+          type: boolean
+        symptomIds:
+          type: array
+          items:
+            type: string
+        freeText:
+          type: string
+        language:
+          type: string
+    TriageResult:
+      type: object
+      required:
+      - urgency
+      - departmentCode
+      - confidence
+      - recommendedFacilityIds
+      - firedRuleIds
+      - matchedSymptomIds
+      properties:
+        urgency:
+          type: integer
+          enum:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+        departmentCode:
+          type: string
+        confidence:
+          type: number
+          minimum: 0
+          maximum: 1
+        recommendedFacilityIds:
+          type: array
+          items:
+            type: string
+        firedRuleIds:
+          type: array
+          items:
+            type: string
+        matchedSymptomIds:
+          type: array
+          items:
+            type: string
+    OtpRequestInput:
+      type: object
+      required:
+      - phone
+      properties:
+        phone:
+          type: string
+          example: '+919876543210'
+    OtpRequestResponse:
+      type: object
+      required:
+      - otpSessionId
+      - expiresInSeconds
+      properties:
+        otpSessionId:
+          type: string
+        expiresInSeconds:
+          type: integer
+          example: 180
+    OtpVerifyInput:
+      type: object
+      required:
+      - otpSessionId
+      - otp
+      properties:
+        otpSessionId:
+          type: string
+        otp:
+          type: string
+          example: '123456'
+    AuthSessionResponse:
+      type: object
+      required:
+      - token
+      - user
+      - patients
+      properties:
+        token:
+          type: string
+        user:
+          $ref: '#/components/schemas/User'
+        patients:
+          type: array
+          items:
+            $ref: '#/components/schemas/Patient'
+    AbhaLinkInput:
+      type: object
+      required:
+      - patientId
+      - aadhaarNumber
+      - otp
+      properties:
+        patientId:
+          type: string
+        aadhaarNumber:
+          type: string
+        otp:
+          type: string
+    AbhaLinkResponse:
+      type: object
+      required:
+      - patientId
+      - abhaAddress
+      - aadhaarLast4
+      properties:
+        patientId:
+          type: string
+        abhaAddress:
+          type: string
+          example: sunita.devi@abdm
+        aadhaarLast4:
+          type: string
+          example: '4321'
+    CreatePatientInput:
+      type: object
+      required:
+      - fullName
+      - dateOfBirth
+      - sex
+      - preferredLanguage
+      properties:
+        fullName:
+          type: string
+        dateOfBirth:
+          type: string
+          format: date
+        sex:
+          type: string
+          enum:
+          - male
+          - female
+          - other
+        aadhaarLast4:
+          type: string
+        preferredLanguage:
+          type: string
+    UpdatePatientInput:
+      type: object
+      properties:
+        fullName:
+          type: string
+        preferredLanguage:
+          type: string
+    BookAppointmentInput:
+      type: object
+      required:
+      - slotId
+      - patientId
+      properties:
+        slotId:
+          type: string
+        patientId:
+          type: string
+    CancelAppointmentInput:
+      type: object
+      required:
+      - reason
+      properties:
+        reason:
+          type: string
+    QueueCallNextResponse:
+      type: object
+      required:
+      - tokenNumber
+      - patientId
+      - calledAt
+      properties:
+        tokenNumber:
+          type: integer
+        patientId:
+          type: string
+        calledAt:
+          type: string
+          format: date-time
+    RegisterWalkInInput:
+      type: object
+      required:
+      - patientId
+      properties:
+        patientId:
+          type: string
+    QueueSkipInput:
+      type: object
+      required:
+      - tokenNumber
+      - reason
+      properties:
+        tokenNumber:
+          type: integer
+        reason:
+          type: string
+    CreateHealthRecordInput:
+      type: object
+      required:
+      - patientId
+      - facilityId
+      - type
+      - data
+      properties:
+        patientId:
+          type: string
+        facilityId:
+          type: string
+        type:
+          type: string
+          enum:
+          - consultation
+          - prescription
+          - lab_report
+          - vaccination
+        appointmentId:
+          type: string
+        data:
+          type: object
+          additionalProperties: true
+    CreateConsentInput:
+      type: object
+      required:
+      - patientId
+      - grantedToUserId
+      - facilityId
+      - purpose
+      - validUntil
+      properties:
+        patientId:
+          type: string
+        grantedToUserId:
+          type: string
+        facilityId:
+          type: string
+        purpose:
+          type: string
+        validUntil:
+          type: string
+          format: date-time
+    ConsentGrant:
+      type: object
+      required:
+      - id
+      - patientId
+      - grantedToUserId
+      - facilityId
+      - purpose
+      - validFrom
+      - validUntil
+      properties:
+        id:
+          type: string
+        patientId:
+          type: string
+        grantedToUserId:
+          type: string
+        facilityId:
+          type: string
+        purpose:
+          type: string
+        validFrom:
+          type: string
+          format: date-time
+        validUntil:
+          type: string
+          format: date-time
+        revokedAt:
+          type: string
+          format: date-time
+    BreakGlassInput:
+      type: object
+      required:
+      - patientId
+      - facilityId
+      - reason
+      properties:
+        patientId:
+          type: string
+        facilityId:
+          type: string
+        reason:
+          type: string
+          minLength: 20
+        encounterId:
+          type: string
+    BreakGlassSessionResponse:
+      type: object
+      required:
+      - sessionToken
+      - expiresAt
+      properties:
+        sessionToken:
+          type: string
+        expiresAt:
+          type: string
+          format: date-time
+    CreatePrescriptionInput:
+      type: object
+      required:
+      - recordId
+      - patientId
+      - facilityId
+      - medicines
+      properties:
+        recordId:
+          type: string
+        patientId:
+          type: string
+        facilityId:
+          type: string
+        medicines:
+          type: array
+          items:
+            type: object
+            required:
+            - medicineId
+            - dosage
+            - frequency
+            - durationDays
+            properties:
+              medicineId:
+                type: string
+              dosage:
+                type: string
+              frequency:
+                type: string
+              durationDays:
+                type: integer
+    PrescriptionResponse:
+      type: object
+      required:
+      - id
+      - recordId
+      - patientId
+      - status
+      - issuedAt
+      properties:
+        id:
+          type: string
+        recordId:
+          type: string
+        patientId:
+          type: string
+        status:
+          type: string
+        issuedAt:
+          type: string
+          format: date-time
+    DispensePrescriptionInput:
+      type: object
+      required:
+      - items
+      properties:
+        items:
+          type: array
+          items:
+            type: object
+            required:
+            - medicineId
+            - quantityDispensed
+            properties:
+              medicineId:
+                type: string
+              quantityDispensed:
+                type: integer
+    DispenseResponse:
+      type: object
+      required:
+      - prescriptionId
+      - status
+      - dispensedAt
+      properties:
+        prescriptionId:
+          type: string
+        status:
+          type: string
+        dispensedAt:
+          type: string
+          format: date-time
+    StockAdjustmentInput:
+      type: object
+      required:
+      - medicineId
+      - eventType
+      - delta
+      properties:
+        medicineId:
+          type: string
+        eventType:
+          type: string
+          enum:
+          - receipt
+          - dispense
+          - adjustment
+          - expiry
+          - transfer
+        delta:
+          type: integer
+    CreateComplaintInput:
+      type: object
+      required:
+      - facilityId
+      - category
+      - severity
+      - description
+      properties:
+        facilityId:
+          type: string
+        category:
+          type: string
+        severity:
+          type: string
+          enum:
+          - low
+          - medium
+          - high
+          - critical
+        description:
+          type: string
+    ComplaintUpdateInput:
+      type: object
+      required:
+      - status
+      - note
+      properties:
+        status:
+          type: string
+        note:
+          type: string
+    CreateReferralInput:
+      type: object
+      required:
+      - patientId
+      - fromFacilityId
+      - toFacilityId
+      - departmentCode
+      - reason
+      properties:
+        patientId:
+          type: string
+        fromFacilityId:
+          type: string
+        toFacilityId:
+          type: string
+        departmentCode:
+          type: string
+        reason:
+          type: string
+    ReferralResponse:
+      type: object
+      required:
+      - id
+      - status
+      - createdAt
+      properties:
+        id:
+          type: string
+        status:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+    CreateTeleconsultInput:
+      type: object
+      required:
+      - patientId
+      - scheduledAt
+      properties:
+        patientId:
+          type: string
+        scheduledAt:
+          type: string
+          format: date-time
+    LiveKitTokenResponse:
+      type: object
+      required:
+      - token
+      - serverUrl
+      - roomName
+      properties:
+        token:
+          type: string
+        serverUrl:
+          type: string
+        roomName:
+          type: string
+    CreateDiagnosticOrderInput:
+      type: object
+      required:
+      - patientId
+      - facilityId
+      - testName
+      properties:
+        patientId:
+          type: string
+        facilityId:
+          type: string
+        testName:
+          type: string
+    SubmitDiagnosticResultInput:
+      type: object
+      required:
+      - results
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            additionalProperties: true
+    CreateFollowUpInput:
+      type: object
+      required:
+      - patientId
+      - facilityId
+      - scheduledDate
+      - relatedRecordId
+      properties:
+        patientId:
+          type: string
+        facilityId:
+          type: string
+        scheduledDate:
+          type: string
+          format: date
+        relatedRecordId:
+          type: string
+        notes:
+          type: string
+    FollowUpResponseInput:
+      type: object
+      required:
+      - adherenceStatus
+      - feedbackNote
+      properties:
+        adherenceStatus:
+          type: string
+        feedbackNote:
+          type: string
+    AuditChainVerificationResponse:
+      type: object
+      required:
+      - isValid
+      - totalRowsVerified
+      - verifiedAt
+      properties:
+        isValid:
+          type: boolean
+        totalRowsVerified:
+          type: integer
+        verifiedAt:
+          type: string
+          format: date-time
